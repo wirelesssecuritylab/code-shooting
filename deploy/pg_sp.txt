@@ -1,0 +1,73 @@
+CREATE OR REPLACE FUNCTION cs_context.cs_target_defect_accuracy(func_user_id text, func_time_from timestamp with time zone)
+ RETURNS SETOF target_defect_agg
+ LANGUAGE plpgsql
+AS $function$
+    declare 
+      target text;
+      targetname text;
+      array_targets text[];
+      hitnum_tmp numeric;
+      ringnum_tmp numeric;
+      hitnum numeric;
+      ringnum numeric;
+      accuracyrate numeric;
+      defect text;
+      array_defects text[];
+      -- r record;
+
+	BEGIN
+      array_targets := array(select target_pos.id from shooting_accuracy_pos, target_pos 
+        where ((shooting_accuracy_pos.user_id = func_user_id) and (target_pos.id = shooting_accuracy_pos.target_id) and (func_time_from <= shooting_accuracy_pos.submit_time)) 
+        group by target_pos.id)::text[];
+       
+      array_defects := (ARRAY['功能','可靠性','设计','可维护','安全性','性能'])::text[];
+       
+       Create Table If Not Exists cs_context.target_defect_temptable(
+         tab_target text,
+         tab_targetname text,
+         tab_defect text,
+         tab_hitnum numeric,
+         tab_ringnum numeric,
+         tab_accuracyrate numeric);
+
+      FOREACH target IN ARRAY array_targets
+      loop
+        raise notice 'each target : (%)', target;
+        
+        -- array_defects := array(select defect_type from shooting_accuracy_pos 
+          -- where ((user_id=func_user_id) and (target_id=target)) group by defect_type)::text[]; 
+        targetname := (select target_pos."name" from target_pos where target_pos.id = target)::text;
+        raise notice 'taget name (%)', targetname;
+         
+        foreach defect in array array_defects
+        loop
+          raise notice 'each defect : (%)', defect;
+          select hit_num into hitnum_tmp from shooting_accuracy_pos where ((user_id=func_user_id) and (target_id=target) and (defect_type=defect)) order by submit_time desc limit 1;
+          select ring_num into ringnum_tmp from ring_num_pos where ((target_id=target) and (defect_type=defect));
+          select COALESCE(hitnum_tmp, 0) into hitnum;
+          select COALESCE(ringnum_tmp, 0) into ringnum;
+          -- hitnum := ('select COALESCE(hitnum_tmp, 0)')::numeric;
+          -- ringnum := ('select COALESCE(ringnum_tmp, 0)')::numeric;
+         
+          -- insert target, defect, hitnum, ringnum into r;
+          -- return query (select * from values(target, defect, hitnum, ring_num));
+          accuracyrate := (select case when ringnum=0 then 0 else round(hitnum/ringnum, 2) end)::numeric;
+         
+          insert into cs_context.target_defect_temptable(tab_target, tab_targetname, tab_defect, tab_hitnum, tab_ringnum, tab_accuracyrate) 
+            values(target, targetname, defect, hitnum, ringnum, accuracyrate);
+           
+          raise notice 'insert temp table (%, %, %, %, %, %)', target, targetname, defect, hitnum, ringnum, accuracyrate;
+        end loop;
+      END LOOP;
+      return query (select cs_context.target_defect_temptable.tab_target, 
+                         cs_context.target_defect_temptable.tab_targetname,
+                         cs_context.target_defect_temptable.tab_defect, 
+                         cs_context.target_defect_temptable.tab_hitnum, 
+                         cs_context.target_defect_temptable.tab_ringnum,
+                         cs_context.target_defect_temptable.tab_accuracyrate from cs_context.target_defect_temptable);
+                        
+      DROP TABLE  If  Exists cs_context.target_defect_temptable;
+      return;
+	END;
+$function$
+;

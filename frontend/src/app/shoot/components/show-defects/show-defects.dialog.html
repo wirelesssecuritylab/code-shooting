@@ -1,0 +1,10 @@
+<jigsaw-dialog class="defect-select" width="800px" top="200px" (close)="dispose()" caption="打靶信息">
+    <div jigsaw-body>
+        <jigsaw-table [data]="_$defectTableData" [columnDefines]="_$columnDefines"
+                      [width]="'100%'" style="max-height: 450px;overflow-y: auto;"></jigsaw-table>
+    </div>
+    <div jigsaw-button-bar>
+        <jigsaw-button (click)="confirmSubmit()">确认</jigsaw-button>
+        <jigsaw-button (click)="dispose()">关闭</jigsaw-button>
+    </div>
+</jigsaw-dialog>

@@ -1,0 +1,45 @@
+.dashboard-iframe-full {
+  border: 0;
+  width: 100%;
+  height: calc(100vh - 130px);
+  padding-top: 15px;
+}
+
+.dashboard-iframe-tab {
+  border: 0;
+  width: 100%;
+  height: calc(100vh - 140px);
+}
+
+.dashboard-iframe-tab-widthParams {
+  border: 0;
+  width: 100%;
+  height: calc(100vh - 90px);
+  margin-top: -50px;
+}
+
+.tab-content-withParams {
+  margin-top : -50px;
+  z-index: 501;
+}
+
+.tab-content-withParams-mask {
+  position: relative;
+  width:101%;
+  height:50px;
+  background: #FFF;
+}
+
+::ng-deep .plx-nav-pills-wrapper{
+  z-index : 509;
+  padding-right: 300px;
+}
+
+.period-content {
+  float: right;
+  width: 200px;
+}
+
+.period-select {
+  z-index: 510;
+}

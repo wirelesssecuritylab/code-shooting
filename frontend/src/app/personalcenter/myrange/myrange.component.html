@@ -1,0 +1,32 @@
+<div>
+  <div style="float: left; line-height: 50px;padding-left: 15px; font-weight: bold"><span>我的靶场</span></div>
+</div>
+<plx-tabset [highlightPosition]="'bottom'" [size]="'lg'">
+  <!--<plx-tab title="待打靶">
+    <ng-template pxTabContent>
+    </ng-template>
+  </plx-tab>-->
+  <plx-tab title="已打靶">
+    <ng-template pxTabContent>
+      <plx-table [data]="data"
+                 [columns]="columns"
+                 [globalFilterPlaceholder]="'搜索'"
+                 [pageSizeSelections]="pageSizeSelections"
+                 [pageSize]="10"
+                 [showLoading]="showLoading"
+                 [loadingPlaceholder]="'加载中...'"
+                 [customBtns]="customBtns"
+                 [checkModel]=" 'multi;single' "
+                 [isPrepareDataOnLocal]="true"
+                 [tableType]="'card'"
+                 [resizable]="false"
+                 [isSelectAllTableData]="true"
+                 [showColFilterToggle]="false"
+                 [showCustomCol]="false"
+                 [isRelatedCheckboxOnRowClick]="true"
+                 [scroll]="scroll"
+      >
+      </plx-table>
+    </ng-template>
+  </plx-tab>
+</plx-tabset>

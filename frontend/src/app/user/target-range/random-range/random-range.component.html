@@ -1,0 +1,140 @@
+<!-- 表格 -->
+<!--常驻语言过滤条件-->
+<div class="plx-table-toolbar-wrapper"
+     style="display: inline-block;margin-bottom: 5px;">
+     <div>
+      <div class="outDiv">
+        <label class="plx-select-demo-label"
+               style="width: 60px; float:left;">工作空间</label>
+        <div class="innerDiv">
+          <plx-select #mySelect
+                      [multiple]=false
+                      placeholder="请选择工作空间"
+                      notFoundMsg="没找到相关选项"
+                      [options]="targetWorkspaceOptions"
+                      [(ngModel)]="workspace"
+                      (ngModelChange)="getLangOptions();getAllTargetList();"
+                      [isShowDeleteBtn]=false
+                      [isShowSelectAll]="false"
+                      [showSelected]="false"
+                      [showTotal]=false>
+          </plx-select>
+        </div>
+      </div>
+      <div class="outDiv">
+        <label class="plx-select-demo-label"
+               style="width: 60px; float:left;">所属语言</label>
+        <div class="innerDiv">
+          <plx-select #mySelect
+                      [multiple]=false
+                      placeholder="请搜索或选择语言"
+                      notFoundMsg="没找到相关选项"
+                      [options]="targetLangOptions"
+                      [(ngModel)]="language"
+                      (ngModelChange)="getTargetList();initTagOptions();"
+                      [isShowDeleteBtn]=false
+                      [isShowSelectAll]="false"
+                      [showSelected]="false"
+                      [showTotal]=false>
+          </plx-select>
+        </div>
+     </div>
+  </div>
+</div>
+
+<plx-table [data]="targetData"
+           [columns]="columns"
+           [globalFilterPlaceholder]="'请输入靶子名称搜索'"
+           [pageSizeSelections]="pageSizeSelections"
+           [pageSize]="10"
+           [showLoading]="showLoading"
+           [loadingPlaceholder]="'加载中...'"
+           [customBtns]="customBtns"
+           [checkModel]=" 'multi;single' "
+           [isPrepareDataOnLocal]="true"
+           [tableType]="'normal'"
+           [resizable]="false"
+           [isSelectAllTableData]="true"
+           [showColFilterToggle]="false"
+           [showCustomCol]="false"
+           [isRelatedCheckboxOnRowClick]="true"
+           [isShowExtend]="isShowExtend">
+
+  <div>
+    <div class="outDiv">
+      <label class="plx-select-demo-label"
+             style="width: 60px; float:left;">缺陷大类</label>
+      <div class="innerDiv">
+        <plx-select #mySelect
+                    [multiple]=false
+                    placeholder="请搜索或选择缺陷大类"
+                    notFoundMsg="没找到相关选项"
+                    [options]="mainCategoryOptions"
+                    [(ngModel)]="mainCategory"
+                    (ngModelChange)="initSubBugTypeOptions($event)"
+                    [isShowDeleteBtn]=false
+                    [isShowSelectAll]="false"
+                    [showSelected]="false"
+                    [showTotal]=false>
+        </plx-select>
+      </div>
+    </div>
+
+    <div class="outDiv">
+      <label class="plx-select-demo-label"
+             style="width: 60px; float:left;">缺陷小类</label>
+      <div class="innerDiv">
+        <plx-select #mySelect
+                    [multiple]=false
+                    placeholder="请搜索或选择缺陷小类"
+                    notFoundMsg="没找到相关选项"
+                    [options]="subCategoryOptions"
+                    [(ngModel)]="subCategory"
+                    (ngModelChange)="initBugDetailOptions($event)"
+                    [isShowDeleteBtn]=false
+                    [isShowSelectAll]="false"
+                    [showSelected]="false"
+                    [showTotal]=false>
+        </plx-select>
+      </div>
+    </div>
+
+    <div class="outDiv">
+      <label class="plx-select-demo-label"
+             style="width: 60px; float:left;">缺陷细项</label>
+      <div class="innerDiv">
+        <plx-select #mySelect
+                    [multiple]=false
+                    placeholder="请搜索或选择缺陷细项"
+                    notFoundMsg="没找到相关选项"
+                    [options]="defectDetailOptions"
+                    [(ngModel)]="defectDetail"
+                    [isShowDeleteBtn]=false
+                    [isShowSelectAll]="false"
+                    [showSelected]="false"
+                    [showTotal]=false>
+        </plx-select>
+      </div>
+    </div>
+  </div>
+
+
+  <button type="button"
+          class="plx-btn plx-btn-primary"
+          style="margin-left:20px;"
+          (click)="getTargetList()">查询</button>
+  <button type="button"
+          class="plx-btn"
+          (click)="resetAdvanceFilter()">重置</button>
+
+
+</plx-table>
+
+<!--操作列-->
+<ng-template #operTemplate
+             let-data="data">
+  <button class="plx-btn plx-btn-table plx-btn-sm"
+          (click)="gotoShoot(data)">{{'打靶'}}</button>
+  <button class="plx-btn plx-btn-table plx-btn-sm"
+          (click)="queryScore(data)">{{'查看成绩'}}</button>
+</ng-template>

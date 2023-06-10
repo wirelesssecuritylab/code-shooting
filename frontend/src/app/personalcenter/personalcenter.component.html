@@ -1,0 +1,12 @@
+<div class="plx-menu-basic-border-color" style="display: flex; width: 100%;height: calc(100vh - 100px);font-size: 0;border-width: 0; border-style: solid">
+  <div style="display: inline-block;height: 100%;">
+    <div style="height: 100%;" [style]="menuWidth">
+      <div plx-menu
+           [menuConfig]="menuConfig" [isAutoRouter]="false"
+           (plxClick)="menuClick($event)" (collapseBtnClick)="collapseBtnClick($event)"></div>
+    </div>
+  </div>
+  <div class="drag-right" style="flex: 1;display: table; padding-left: 10px; font-size: 12px;">
+    <router-outlet></router-outlet>
+  </div>
+</div>

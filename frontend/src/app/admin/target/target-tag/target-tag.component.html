@@ -1,0 +1,28 @@
+<!-- 暂时没有用到这个标签，保留只是作为使用自定义表单组件的一个参考案例-->
+<div>
+  <plx-select #plxSelect
+              [options]="options"
+              [(ngModel)]="selectedOptions"
+              [isCustomDropdown]="true"
+              [isLocalScrollCustomDropdown]="false"
+              placeholder="请搜索或选择"
+              (deselected)="deselected($event)"
+              (filterChanged)="filterChanged($event)"
+              (opened)="onOpen()"
+              (closed)="onClose()"
+              [multiple]="true"
+              [showTotal]="true"
+  >
+      <div class="tree-container" style="height:200px;">
+          <plx-tree #plxSelectTree
+                    [value]="treeNodes"
+                    [selectedNodeKey]="selectedNodeKey"
+                    [closePopoverByNodeClick]="true"
+                    (selectionChange)="selectionChange($event)"
+                    [isSelectable]="true"
+                    [isNodeClickPropagateCkbox]="true"
+          >
+          </plx-tree>
+      </div>
+  </plx-select>
+</div>

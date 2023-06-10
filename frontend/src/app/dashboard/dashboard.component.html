@@ -1,0 +1,28 @@
+<div class="period-content">
+  <plx-select class="period-select" placeholder="请选择时间区间"
+              [options]="periodOptions"
+              [(ngModel)]="selectPeriod"
+              [required]=true
+              (selected)="onSelectPeriod()"
+  >
+  </plx-select>
+</div>
+<div *ngIf="dashboards.length == 1">
+  <iframe id="mainFrm" [src]="dashboards[0].url" class="dashboard-iframe-full"></iframe>
+</div>
+
+<div *ngIf="dashboards.length > 1">
+  <plx-tabset [type]="'pills'">
+    <plx-tab *ngFor="let dashboard of dashboards" [title]="dashboard.name">
+      <ng-template pxTabContent>
+        <div *ngIf="dashboard.widthParams" class="tab-content-withParams">
+          <div class="tab-content-withParams-mask"></div>
+          <iframe [src]="dashboard.url" class="dashboard-iframe-tab-widthParams"></iframe>
+        </div>
+        <div *ngIf="!dashboard.widthParams">
+          <iframe [src]="dashboard.url" class="dashboard-iframe-tab"></iframe>
+        </div>
+      </ng-template>
+    </plx-tab>
+  </plx-tabset>
+</div>

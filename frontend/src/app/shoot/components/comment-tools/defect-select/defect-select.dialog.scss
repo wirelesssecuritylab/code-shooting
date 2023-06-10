@@ -1,0 +1,24 @@
+.defect-config {
+    .config-box {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        label {
+            width: 70px;
+            text-align: right;
+            line-height: 12px;
+        }
+
+        .value {
+            margin-left: 10px;
+            flex: 1;
+        }
+
+        .required {
+            width: auto !important;
+            color: red !important;
+            font-weight: bold;
+        }
+    }
+}

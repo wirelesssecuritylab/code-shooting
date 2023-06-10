@@ -1,0 +1,12 @@
+{
+  "mappings": [
+    {
+      "depart_name": "软件一部",
+      "mapping": {
+        "staff_id": [
+          "8982293781"
+        ]
+      }
+    }
+  ]
+}

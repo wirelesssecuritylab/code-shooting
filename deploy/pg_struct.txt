@@ -1,0 +1,9 @@
+-- DROP TYPE cs_context.target_defect_agg;
+
+CREATE TYPE cs_context.target_defect_agg AS (
+	targetid text,
+	targetname text,
+	defect text,
+	hitnum numeric,
+	ringnum numeric,
+	accuracyrate numeric);

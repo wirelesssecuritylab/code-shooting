@@ -1,0 +1,97 @@
+.app-layout-header {
+  height: 64px;
+  padding: 0 50px;
+  line-height: 64px;
+  background: #001529;
+}
+
+.cur-user {
+  float: right;
+  background-color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 60px;
+  height: 100%;
+  display: flex;
+}
+
+.cur-user {
+  height: 32px;
+  line-height: 32px;
+  margin-top: 16px;
+  color: #666;
+  margin-left: 5px;
+  font-size: 16px;
+}
+
+.cur-user #drop-down:hover {
+  color: #5182e4;
+}
+
+.cur-user .user:hover {
+  color: #5182e4;
+}
+
+.wrapper {
+  width: 100px;
+  height: 110px;
+  position: absolute;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+  border: 1px solid #d9d9d9;
+  top: 52px;
+  right: 50px;
+  background-color: #FFFFFF;
+}
+
+ul {
+  z-index:999;
+  list-style: none;
+}
+
+li {
+  line-height: 36px;
+  height: 36px;
+  text-align: center;
+  font-size: 14px;
+  color: #595959;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: #e7f4fd;
+}
+
+#logo {
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: 16px;
+}
+
+#user-logo {
+  border-radius: 50%;
+  background: #e6edf3;
+  border: none;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+
+#drop-down {
+  background-color: transparent;
+  border: none;
+  margin-top: 9px;
+}
+
+.app-header-dropdown-menu {
+  float: right;
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 60px;
+  height: 100%;
+  display: flex;
+}

@@ -1,0 +1,8 @@
+
+<div class="prob-title">
+  <span>{{name}}</span>
+</div>
+<div class="prob-info" *ngIf=this.showTime()>
+  <plx-tag [color]='"green"'>开始时间 {{start_at.toLocaleString()}}</plx-tag>
+  <plx-tag [color]='"blue"'>截止时间 {{end_at.toLocaleString()}}</plx-tag>
+</div>

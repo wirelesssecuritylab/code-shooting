@@ -1,0 +1,35 @@
+<div class="target-box">
+    <!--左侧树-->
+    <div class="files-tree">
+        <tp-files-tree [(selectedFile)]="_$currentFile" (selectedFileChange)="_$fileNodeChange($event)" [targetId]="_targetId"></tp-files-tree>
+    </div>
+
+    <!--右侧编辑器区-->
+    <div class="content-code">
+
+        <!--编辑器顶部文件名tab显示区和提交答案按钮-->
+        <div class="tools-bar" >
+            <jigsaw-tabs-bar *ngIf="_$tabTitles.length" class="bar" [data]="_$tabTitles" [tabType]="'page'"
+                             [(selectedIndex)]="_$fileSelectedIndex"
+                             (selectedIndexChange)="_$selectedIndexChange($event)"></jigsaw-tabs-bar>
+            <div *ngIf="_shootType == 'startShoot' || _shootType == 'continueShoot' || _shootType == 'restartShoot'">
+              <!-- <jigsaw-button class="next" colorType="primary" (click)="_$gotoNextTarget()">下一个靶子</jigsaw-button> -->
+              <!-- <jigsaw-button *ngIf="_fromPage !== 'test' "class="btn" colorType="primary" (click)="_$save()">保存草稿</jigsaw-button> -->
+              <jigsaw-button class="submit" colorType="primary" (click)="_$submit()" [disabled]="curShootResult?.targets?.length <=0">提交答卷</jigsaw-button>
+            </div>
+        </div>
+
+        <!--代码编辑器显示区-->
+        <tp-code *ngIf="_$currentFile?.type != 'md'" #codeEditor language="ts" [(code)]="_$code"
+                 (ready)="_$coderReady()"
+                 readonly="true" width="100%" height="100%"></tp-code>
+
+        <!--.md文件显示区-->
+        <div *ngIf="_$currentFile?.type == 'md'" style="margin: 0 20px; height: 100%; overflow: scroll;"
+             [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}">
+            <markdown [data]="_$code"></markdown>
+        </div>
+        <!--图片文件显示区-->
+        <!-- <img *ngIf="_$currentFile?.imageSrc" src="{{_$currentFile?.imageSrc}}" style="height: 100%; margin: 0 20px;"> -->
+    </div>
+</div>

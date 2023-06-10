@@ -1,0 +1,19 @@
+
+<!--面包屑-->
+<div>
+  <plx-breadcrumb [model]="breadModel" [titleMaxWidth]="'500px'"></plx-breadcrumb>
+</div>
+
+<div *ngIf="!showResult">
+  <p>暂未查到打靶成绩，请确认是否已提交打靶答卷</p>
+</div>
+<div *ngIf="showResult">
+  <app-score
+    [data]="shotTargets"
+    [hitNum]="hitNum"
+    [hitScore]="hitScore"
+    [totalNum]="totalNum"
+    [totalScore]="totalScore"
+    [showResult]="showResult"
+  ></app-score>
+</div>

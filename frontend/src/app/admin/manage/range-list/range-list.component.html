@@ -1,0 +1,59 @@
+<plx-table [data]="rangeList"
+    [columns]="columns"
+    [globalFilterPlaceholder]="'搜索'"
+    [pageSizeSelections]="pageSizeSelections"
+    [pageSize]="10"
+    [showLoading]="showLoading"
+    [loadingPlaceholder]="'加载中...'"
+    [customBtns]="customBtns"
+    [checkModel]=" 'multi;single' "
+    [isPrepareDataOnLocal]="true"
+    [tableType]="'normal'"
+    [resizable]="false"
+    [isSelectAllTableData]="true"
+    [showColFilterToggle]="false"
+    [showCustomCol]="false"
+    [isRelatedCheckboxOnRowClick]="true"
+    >
+
+  <span class="plx-table-toolbar-wrapper">
+    <button type="button" class="plx-btn plx-btn-guide" (click)="addRange()">
+      <i class="plx-btn-icon plx-ico-new-16"></i>
+      {{'新建靶场'}}
+    </button>
+  </span>
+</plx-table>
+
+<!--操作列-->
+<ng-template #operTemplate let-data="data">
+  <button class="plx-btn plx-btn-table plx-btn-sm" (click)="goToRange(data)">{{'查看成绩'}}</button>
+  <button class="plx-btn plx-btn-table plx-btn-sm" (click)="modifyRange(data)" [disabled]="data.owner !== userId">{{'编辑'}}</button>
+  <button class="plx-btn plx-btn-table plx-btn-sm" (click)="openConfirmDlg(content, data)" [disabled]="data.owner !== userId">{{'删除'}}</button>
+</ng-template>
+
+<!--删除靶场模态框-->
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+      <h4 class="modal-title">删除</h4>
+      <button type="button" class="close" (click)="d('Cross click')">
+          <span class="plx-ico-close-16"></span>
+      </button>
+  </div>
+  <div class="modal-body" style="min-height: 54px;">
+      <div class="row alert-modal" style="min-height: 54px;">
+          <span class="tip-icon error plx-ico-dialog-risk-48"></span>
+          <div class="tip-info">
+              <div class="alert-title">确定删除靶场:{{curRowData.name}}？</div>
+              <div class="alert-result">靶场删除后,该靶场相关的打靶成绩将一并删除!</div>
+          </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+      <div class="form-group">
+          <div class="btnGroup modal-btn">
+              <button type="button" class="plx-btn plx-btn-error" (click)="deleteRange();c('Close click')">删除</button>
+              <button type="button" class="plx-btn" (click)="c('Close click')">取消</button>
+          </div>
+      </div>
+  </div>
+</ng-template>

@@ -1,0 +1,17 @@
+<div style="margin-top: 20px;">
+    <div class="desc">命中靶环数/靶标靶环数： {{hitNum}}/{{totalNum}}</div>
+    <div class="desc">命中靶环总分/靶标靶环总分： {{hitScore}}/{{totalScore}}</div>
+    <div class="desc">批卷详情： </div>
+    <plx-table
+        [data]="data"
+        [columns]="columns"
+        [pageSizeSelections]="pageSizeSelections"
+        [pageSize]="50"
+        [loadingPlaceholder]="'加载中...'"
+        [dropDownTitleWidth]="'60px'"
+        [showColFilterToggle]="false"
+        [showCustomCol]="false"
+        [scroll]="scroll"
+    >
+    </plx-table>
+</div>

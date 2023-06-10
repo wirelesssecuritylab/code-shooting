@@ -1,0 +1,33 @@
+<!--<plx-form [settings]="formSetting"></plx-form>-->
+
+<div>
+  <button type="button" class="plx-btn" [disabled]="disabled" (click)="getResult()" [attr.aria-expanded]="showResult" aria-controls="result"
+          placement="right" [triggers]="'hover'" [plxPopover]="hoverStr">查看成绩</button>
+</div>
+
+<div *ngIf="disabled" style="margin-top: 8px;">
+  <plx-systemprompt *ngIf="rangeType=='compete' "type="warning" text="打靶比赛尚未结束，不允许查看成绩"></plx-systemprompt>
+  <plx-systemprompt *ngIf="rangeType=='test'" type="warning" text="你尚未提交答卷，不允许查看成绩"></plx-systemprompt>
+</div>
+
+<!--<app-score-->
+<!--  [data]="shotTargets"-->
+<!--  [hitNum]="hitNum"-->
+<!--  [hitScore]="hitScore"-->
+<!--  [showResult]="showResult"-->
+<!--&gt;</app-score>-->
+
+<div [pxCollapse]="!showResult">
+  <div class="plx-collapse-no-border-bottom">
+    <div>
+      <app-score
+        [data]="shotTargets"
+        [hitNum]="hitNum"
+        [hitScore]="hitScore"
+        [totalNum]="totalNum"
+        [totalScore]="totalScore"
+        [showResult]="showResult"
+      ></app-score>
+    </div>
+  </div>
+</div>

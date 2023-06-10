@@ -1,0 +1,95 @@
+ul li {
+  float: left;
+  margin-left: 32px;
+  font-size: 18px;
+  list-style: none;
+  height: 62px;
+  line-height: 62px;
+  width: 80px;
+  text-align: center;
+  cursor: pointer;
+}
+
+ul li:hover {
+  color: #5182e4;
+}
+
+ul {
+  margin-left: 100px;
+}
+
+.bottomLine {
+  margin-left: 100px;
+}
+
+.blueline1 {
+  width: 80px;
+  height: 2px;
+  background-color: #1993ff;
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 32px;
+}
+.blueline2 {
+  width: 80px;
+  height: 2px;
+  background-color: #1993ff;
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 144px;
+}
+
+.blueline3 {
+  width: 80px;
+  height: 2px;
+  background-color: #1993ff;
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 256px;
+}
+
+.blueline4 {
+  width: 80px;
+  height: 2px;
+  background-color: #1993ff;
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 368px;
+}
+
+.blueline5 {
+  width: 80px;
+  height: 2px;
+  background-color: #1993ff;
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 480px;
+}
+
+.blueline6 {
+  width: 80px;
+  height: 2px;
+  background-color: #1993ff;
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 592px;
+}
+
+.blueline7 {
+  width: 80px;
+  height: 2px;
+  background-color: #1993ff;
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 704px;
+}
+
+
+.blueline8 {
+  width: 80px;
+  height: 2px;
+  background-color: #1993ff;
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 816px;
+}

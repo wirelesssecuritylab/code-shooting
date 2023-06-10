@@ -1,0 +1,42 @@
+code-shooting:
+  app:
+    name: code-shooting # 指定微服务名称
+    version: v1 # 指定微服务版本
+
+  rest-servers: # rest server配置
+    - name: code-shooting  # 指定server名称, router.go中通过multServer.GetRestServerByName("server1")使用
+      addr: 0.0.0.0:2022 # 指定绑定的IP及端口号
+      readtimeout: 180s
+      writetimeout: 180s
+      maxheaderbytes: 16384
+      rootpath: /code-shooting/v1 # 指定路由的前缀
+#      maxconnections: 1000
+#      middlewares:
+#        - name: ratelimit                     # 处理请求速率限制：maxrequests-可以处理请求的最大峰值；requestspersec-每秒可以处理请求的个数
+#          maxrequests: 1000
+#          requestspersec: 500
+
+  log: # 日志配置
+    level: debug # 指定打印的等级
+    encoder: plain # 指定输出的格式
+    outputPaths:
+      - stdout # 指定输出到的文件路径
+    rotateConfig: # 日志轮转配置
+      maxSize: 10 # 指定日志文件大小
+      maxBackups: 2 # 指定日志文件的备份数量
+      maxAge: 7 # 指定日志文件的保存时长
+      compress: false # 指定轮转后文件是否压缩
+
+  databases:
+    postgres:
+      - id: code-shooting
+        user: ${db_user:code-shooting}
+        password: ${db_pwd:code-shooting_y_Q2_pnho_ql}
+        host: ${db_host:0.0.0.0}
+        port: ${db_port:3333}
+        dbName: code-shooting
+        connParams:
+          maxOpen: 32
+          maxIdle: 5
+          maxLifetime: 1800 # seconds
+          sslmode: disable

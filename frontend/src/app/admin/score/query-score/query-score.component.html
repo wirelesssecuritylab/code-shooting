@@ -1,0 +1,93 @@
+<!-- <div class="plx-title-level1">{{rangeName}}</div> -->
+<!--面包屑-->
+<div style="margin-bottom: 20px;">
+  <plx-breadcrumb [model]="breadModel" [titleMaxWidth]="'500px'"></plx-breadcrumb>
+</div>
+
+<!-- 表格 -->
+<plx-table [data]="scoreData"
+    [columns]="columns"
+    [globalFilterPlaceholder]="'请输入关键字搜索'"
+    [pageSizeSelections]="pageSizeSelections"
+    [pageSize]="10"
+    [showLoading]="showLoading"
+    [loadingPlaceholder]="'加载中...'"
+    [customBtns]="customBtns"
+    [checkModel]=" 'multi;single' "
+    [isPrepareDataOnLocal]="true"
+    [tableType]="'normal'"
+    [resizable]="false"
+    [isSelectAllTableData]="true"
+    [showColFilterToggle]="false"
+    [showCustomCol]="false"
+    [isRelatedCheckboxOnRowClick]="true"
+    [isMultiColSort]="true"
+    [maxMultiSortColNum]="2"
+    >
+
+  <!--过滤条件-->
+  <div class="plx-table-toolbar-wrapper">
+    <div class="outDiv" [hidden]="projectId == 'public'">
+      <label class="plx-select-demo-label" style="width: 60px; float:left;">部门名称</label>
+      <div class="innerDiv">
+        <plx-select #mySelect
+          [multiple]="true"
+          placeholder="请搜索或选择部门"
+          notFoundMsg="没找到相关选项"
+          [options]="departmentOption"
+          [(ngModel)]="selectedDepartment"
+          (ngModelChange)="queryRangeScore()"
+          [maxlength]="30"
+          [isShowDeleteBtn]=true
+          [isShowSelectAll]="true"
+          [showSelected]="true"
+          [showTotal]=true
+          >
+        </plx-select>
+      </div>
+    </div>
+
+    <div class="outDiv">
+      <label class="plx-select-demo-label" style="width: 60px; float:left;">打靶语言</label>
+      <div class="innerDiv">
+        <plx-select #mySelect
+          placeholder="请搜索或选择语言"
+          notFoundMsg="没找到相关选项"
+          [options]="languagesOption"
+          [(ngModel)]="selectedLanguage"
+          (ngModelChange)="queryRangeScore()"
+          [maxlength]="30"
+          [isShowDeleteBtn]=false
+          >
+        </plx-select>
+      </div>
+    </div>
+  </div>
+
+</plx-table>
+
+<!--导出成绩对话框-->
+<div>
+  <button id="exportDlgBtn" (click)="open(content)" style="display: none;">隐藏按钮</button>
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">导出打靶成绩</h4>
+        <button type="button" class="close" (click)="d('Cross click')">
+            <span class="plx-ico-close-16"></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <plx-form [settings]="formSetting"></plx-form>
+    </div>
+    <div class="modal-footer">
+        <div class="form-group">
+            <div class="btnGroup modal-btn"  style="margin-top: -16px;">
+                <button type="button" class="plx-btn plx-btn-primary" (click)="confirmExport()">导出</button>
+                <button type="button" class="plx-btn" (click)="cancel()">取消</button>
+            </div>
+        </div>
+    </div>
+  </ng-template>
+</div>
+
+

@@ -1,0 +1,23 @@
+.align {
+  display: flex;
+  align-items: center;
+  text-align:center
+}
+
+.ant-btn-sm {
+  height: 30px;
+  padding: 0 7px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.prob-space {
+  color:#fff;
+  font-size: 20px;
+}
+
+.prob-time {
+  color:#796860;
+  font-size: 12px;
+  height: 20px;
+}

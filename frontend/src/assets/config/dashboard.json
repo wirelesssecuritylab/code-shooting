@@ -1,0 +1,15 @@
+{
+  "manage": [
+    {
+      "name": "组织看板",
+      "url": "xxx"
+    }
+  ],
+  "user": [
+    {
+      "name": "个人看板",
+      "url": "xxx",
+      "widthParams": false
+    }
+  ]
+}

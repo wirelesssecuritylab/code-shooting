@@ -1,0 +1,38 @@
+<div class="progress-board all-boarder">
+  <div class="progress-board-title">
+    进度看板
+    <span>
+      ({{this.answers.length}}/{{progressBoardButtons.length}})
+    </span>
+  </div>
+
+  <div>
+    <p class="progress-board-list"></p>
+    <div *ngFor="let progressBoardButton of progressBoardButtons;let index = index">
+      <!-- 当前选中 -->
+      <div *ngIf="current == index + 1; else second"
+           class="number_1">
+        {{ index + 1 }}
+      </div>
+      <!-- 已完成 -->
+      <ng-template #second>
+        <div *ngIf="answers.indexOf(progressBoardButton.id) !== -1;else third"
+             class="number_2"
+             (click)="gotoTarget(progressBoardButton.id,index)">
+          {{ index + 1 }}
+        </div>
+      </ng-template>
+      <ng-template #third>
+        <div class="number_3"
+             (click)="gotoTarget(progressBoardButton.id,index)">
+          {{ index + 1 }}
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="progress-board-bottom">
+    <p><span></span>选中</p>
+    <p><span></span>已答</p>
+    <p><span></span>未答</p>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+{
+    "mappings": [
+        {
+            "belonged_layer": "codeShooting",
+            "mapping": {
+                "privilege_names": [
+                    "rangeView",
+                    "scoreView",
+                    "submitAnswerPaper",
+                    "fillinAnswerPaper"
+                ]
+            }
+        },
+        {
+            "belonged_layer": "rangeManage",
+            "mapping": {
+                "privilege_names": [
+                    "submitStandardAnswer",
+                    "submitTemplate",
+                    "createRange",
+                    "deleteRange",
+                    "viewRangeScore",
+                    "editTargetTag"
+                ]
+            }
+        }
+    ]
+}

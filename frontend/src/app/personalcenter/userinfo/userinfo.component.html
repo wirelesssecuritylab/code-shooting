@@ -1,0 +1,75 @@
+<div class="personal-center-heading">
+  <div style="float: left; line-height: 50px;padding-left: 15px; font-weight: bold"><span>个人信息</span></div>
+  <div [hidden]="isEdit" style="float: right;line-height: 50px;">
+    <button class="plx-icon-btn plx-icon-word-btn plx-ico-modify-16 personal-center-edit" (click)="editInfo()"><span class="plx-icon-word-btn-text">编辑</span></button>
+  </div>
+</div>
+<div class="personal-center-container">
+  <div [hidden]="isEdit" class="row personal-center-row">
+    <label class="control-label attr-label">
+      <p class="text-left">部门</p>
+    </label>
+    <label class="control-label attr-value">{{userInfo?.department}}</label>
+  </div>
+  <div [hidden]="!isEdit" class="row personal-center-row">
+    <label class="control-label attr-label">
+      <p class="text-left">部门</p>
+    </label>
+    <plx-text-input width="300px" [maxLength]="100" [(ngModel)]="department" [size]="'sm'"></plx-text-input>
+    <i class="plx-ico-refresh-16 refresh-info" placement="top" plxTooltip="刷新" (click)="refreshInfo()"></i>
+  </div>
+  <div [hidden]="isEdit" class="row personal-center-row">
+    <label class="control-label attr-label">
+      <p class="text-left">中心</p>
+    </label>
+    <label class="control-label attr-value">{{userInfo?.centerName}}</label>
+  </div>
+  <div [hidden]="!isEdit" class="row personal-center-row">
+    <label class="control-label attr-label">
+      <p class="text-left">中心</p>
+    </label>
+    <plx-text-input width="300px" [maxLength]="100" [(ngModel)]="centerName" [size]="'sm'"></plx-text-input>
+  </div>
+  <div [hidden]="isEdit" class="row personal-center-row">
+    <label class="control-label attr-label">
+      <p class="text-left">研究院</p>
+    </label>
+    <label class="control-label attr-value">{{userInfo?.institute}}</label>
+  </div>
+  <div [hidden]="!isEdit" class="row personal-center-row">
+    <label class="control-label attr-label">
+      <p class="text-left">研究院</p>
+    </label>
+    <plx-text-input width="300px" [maxLength]="100" [(ngModel)]="institute" [size]="'sm'"></plx-text-input>
+  </div>
+  <div [hidden]="isEdit" class="row personal-center-row">
+    <label class="control-label attr-label">
+      <p class="text-left">团队</p>
+    </label>
+    <label class="control-label attr-value">{{userInfo?.teamName}}</label>
+  </div>
+  <div [hidden]="!isEdit" class="row personal-center-row">
+    <label class="control-label attr-label">
+      <p class="text-left">团队</p>
+    </label>
+    <plx-text-input width="300px" [maxLength]="100" [(ngModel)]="teamName" [size]="'sm'"></plx-text-input>
+  </div>
+  <div [hidden]="isEdit" class="row personal-center-row">
+    <label class="control-label attr-label">
+      <p class="text-left">邮箱</p>
+    </label>
+    <label class="control-label attr-value">{{userInfo?.email}}</label>
+  </div>
+  <div [hidden]="!isEdit" class="row personal-center-row">
+    <label class="control-label attr-label">
+      <p class="text-left">邮箱</p>
+    </label>
+    <plx-text-input width="300px" [maxLength]="100" [(ngModel)]="email" [size]="'sm'" (input)="inputEmail()" (blur)="validateEmail()" [isValidate]="isEmailValid" [errorMsg]="isEmailValid?'':'邮箱格式不正确'"></plx-text-input>
+  </div>
+  <div [hidden]="!isEdit" class="form-group" style="padding: 20px;">
+    <div class="btnGroup modal-btn">
+      <button type="button" class="plx-btn plx-btn-primary" (click)="save()">保存</button>
+      <button type="button" style="margin-left: 30px" class="plx-btn" (click)="cancel()">取消</button>
+    </div>
+  </div>
+</div>

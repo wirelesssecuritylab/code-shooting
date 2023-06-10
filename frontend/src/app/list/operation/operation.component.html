@@ -1,0 +1,28 @@
+<div class="align">
+  <button type="button" class="plx-btn plx-btn-primary ant-btn-sm" [disabled]="this.showBtn()" (click)="open(content)">
+    <span>进 入</span>
+  </button>
+</div>
+<div class="prob-time" *ngIf=this.showDdl()>
+  <p>距开始 {{timeStr}}</p>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">打靶</h4>
+    <button type="button" class="close" (click)="d('Cross click')">
+      <span class="plx-ico-close-16"></span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <plx-form [settings]="formSetting"></plx-form>
+  </div>
+  <div class="modal-footer">
+    <div class="form-group">
+      <div class="btnGroup modal-btn"  style="margin-top: -16px;">
+        <button type="button" class="plx-btn plx-btn-primary" (click)="submit()">确定</button>
+        <button type="button" class="plx-btn" (click)="cancel()">取消</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

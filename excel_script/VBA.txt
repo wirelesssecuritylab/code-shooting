@@ -1,0 +1,211 @@
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+     With Target.Validation
+            .Delete 'delete previous validation
+     End With    
+
+    If Target.Row = 1 Then Exit Sub
+
+    Dim langs
+    Set langs = CreateObject("scripting.Dictionary")
+    
+    Dim reg
+    Set reg = CreateObject("VBScript.RegExp")
+    
+    With reg
+        .Global = True
+        .Pattern = "缺陷分类（(.+)）"
+    End With
+    
+    Dim generalWs As Worksheet
+    
+    
+    For i = 1 To Sheets.Count
+        For Each m In reg.Execute(Sheets(i).Name)
+            If m.SubMatches(0) = "通用" Then
+                Set generalWs = ThisWorkbook.Worksheets("缺陷分类（通用）")
+            Else
+                langs(m.SubMatches(0)) = Sheets(i).Name
+            End If
+        Next
+    Next
+    
+    ' 在此处添加不同语言与sheet页的关联信息
+    ' langs("Go") = "缺陷分类（Go）"
+    
+    Dim langRow As Long
+    Dim langColumn As Long
+    langRow = 2
+    langColumn = 11
+    
+    ' 为语言选择添加数据验证
+    
+    If Target.Row = langRow And Target.Column = langColumn Then
+        With Target.Validation
+            .Delete 'delete previous validation
+            .Add Type:=xlValidateList, AlertStyle:=xlValidateAlertStop, Formula1:=Join(langs.keys, ",")
+        End With
+    End If
+    
+
+    Dim baseColumn As Long
+    Dim lastColumn As Long
+    baseColumn = 4
+    lastColumn = 6
+    
+    If Target.Column < baseColumn Or Target.Column > lastColumn Then Exit Sub
+    
+        
+    Dim langRange As Range
+    Set langRange = ActiveSheet.Cells(langRow, langColumn)
+    
+    If WorksheetFunction.CountA(langRange) = 0 Or (Not langs.Exists(langRange.Value)) Then
+        MsgBox "“语言类型”为空或填写有误，请重新填写，谢谢！"
+        Exit Sub
+    End If
+    
+    
+    
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Worksheets(langs(langRange.Value))
+
+    
+    ' 处理缺陷大类
+    masterRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+    
+    Dim masterDict
+    Set masterDict = CreateObject("scripting.Dictionary")
+    Dim masterRange As Range
+    
+    For Each i In ws.Range("A2:A" & masterRow)
+        If Not IsEmpty(i) Then
+            If Target.Column = baseColumn Then
+                masterDict(i.Value) = ""
+            Else
+                If i = Target.Offset(0, baseColumn - Target.Column) Then
+                    Set masterRange = i.MergeArea
+                End If
+            End If
+        End If
+    Next
+    
+    
+    Dim generalMasterRange As Range
+    
+    If Not generalWs Is Nothing Then
+        generalMasterRow = generalWs.Cells(Rows.Count, 1).End(xlUp).Row
+    
+        For Each i In generalWs.Range("A2:A" & generalMasterRow)
+            If Not IsEmpty(i) Then
+                If Target.Column = baseColumn Then
+                    masterDict(i.Value) = ""
+                Else
+                    If i = Target.Offset(0, baseColumn - Target.Column) Then
+                        Set generalMasterRange = i.MergeArea
+                    End If
+                End If
+            End If
+        Next
+    End If
+    
+    
+    
+    
+    If Target.Column > baseColumn And (masterRange Is Nothing) And (generalMasterRange Is Nothing) Then
+        MsgBox "“缺陷大类”为空或填写有误，请重新填写，谢谢！"
+        Exit Sub
+    End If
+    
+    ' 处理缺陷小类
+    
+    Dim monitorDict
+    Set monitorDict = CreateObject("scripting.Dictionary")
+    Dim monitorRange As Range
+    
+    If Target.Column > baseColumn And (Not masterRange Is Nothing) Then
+        For Each i In masterRange
+            If Not IsEmpty(i.Offset(0, 1)) Then
+                If Target.Column = baseColumn + 1 Then
+                    monitorDict(i.Offset(0, 1).Value) = ""
+                Else
+                    If i.Offset(0, 1) = Target.Offset(0, baseColumn + 1 - Target.Column) Then
+                        Set monitorRange = i.Offset(0, 1).MergeArea
+                    End If
+                End If
+            End If
+        Next
+    End If
+    
+    
+    Dim generalMonitorRange As Range
+    
+    If Target.Column > baseColumn And (Not generalMasterRange Is Nothing) Then
+        For Each i In generalMasterRange
+            If Not IsEmpty(i.Offset(0, 1)) Then
+                If Target.Column = baseColumn + 1 Then
+                    monitorDict(i.Offset(0, 1).Value) = ""
+                Else
+                    If i.Offset(0, 1) = Target.Offset(0, baseColumn + 1 - Target.Column) Then
+                        Set generalMonitorRange = i.Offset(0, 1).MergeArea
+                    End If
+                End If
+            End If
+        Next
+    End If
+    
+    
+    ' 处理缺陷细项
+    
+    If Target.Column > baseColumn + 1 And (monitorRange Is Nothing) And (generalMonitorRange Is Nothing) Then
+        MsgBox "“缺陷小类”为空或填写有误，请重新填写，谢谢！"
+        Exit Sub
+    End If
+    
+    
+    Dim detailDict
+    Set detailDict = CreateObject("scripting.Dictionary")
+    
+    
+    If Target.Column > baseColumn + 1 And (Not monitorRange Is Nothing) Then
+        For Each i In monitorRange
+            If Not IsEmpty(i.Offset(0, 1)) Then
+                If Target.Column = baseColumn + 2 And Not i.Offset(0, 1).Font.Strikethrough Then
+                    detailDict(Replace(i.Offset(0, 1).Value, ",", "，")) = ""
+                End If
+            End If
+        Next
+    End If
+    
+    
+    If Target.Column > baseColumn + 1 And (Not generalMonitorRange Is Nothing) Then
+        For Each i In generalMonitorRange
+            If Not IsEmpty(i.Offset(0, 1)) Then
+                If Target.Column = baseColumn + 2 And Not i.Offset(0, 1).Font.Strikethrough Then
+                    detailDict(Replace(i.Offset(0, 1).Value, ",", "，")) = ""
+                End If
+            End If
+        Next
+    End If
+    
+    
+    ' 创建数据验证
+    
+    Select Case Target.Column
+    Case baseColumn
+        With Target.Validation
+            .Delete 'delete previous validation
+            .Add Type:=xlValidateList, AlertStyle:=xlValidateAlertStop, Formula1:=Join(masterDict.keys, ",")
+        End With
+    Case baseColumn + 1 
+        With Target.Validation
+            .Delete 'delete previous validation
+            .Add Type:=xlValidateList, AlertStyle:=xlValidateAlertStop, Formula1:=Join(monitorDict.keys, ",")
+        End With
+    Case baseColumn + 2 
+        With Target.Validation
+            .Delete 'delete previous validation
+            .Add Type:=xlValidateList, AlertStyle:=xlValidateAlertStop, Formula1:=Join(detailDict.keys, ",")
+        End With
+    End Select
+End Sub
+

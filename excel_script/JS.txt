@@ -1,0 +1,181 @@
+function Workbook_SheetSelectionChange(Sh, Target)
+{
+	if(ActiveSheet.Name != "靶标记录") {
+		return
+	}
+        Target.Validation.Delete()
+
+	if(Target.Row == 1) {
+		return 
+	}
+
+	var langs = {}
+
+	let reg = "缺陷分类（(.+)）"	
+	let generalType = "通用"
+
+	var generalWs
+
+	// 准备语言信息
+	for(var i=1; i <= Sheets.Count; i++) {
+		var name = Sheets.Item(i).Name
+		let r = name.match(reg)
+		if(r != null) {
+			let type = r[1]
+			if(type == generalType) {
+				generalWs = Sheets.Item(i)
+			} else {
+				langs[type] = Sheets.Item(i)
+			}
+		}
+	}
+
+	
+	let langRow = 2
+	let langColumn = 11
+
+	//  为语言添加数据验证
+	if(Target.Row == langRow && Target.Column == langColumn) {
+		let v = Target.Validation
+		v.Delete()
+		v.Add(xlValidateList,xlValidAlertStop,xlBetween,Object.keys(langs).join(","))
+	}
+
+
+	let baseColumn = 4
+	let lastColumn = 6
+
+	// 仅对缺陷大类、小类及细项进行处理
+	if(Target.Column < baseColumn || Target.Column > lastColumn) {
+		return
+	}
+
+	let lang = Cells.Item(langRow, langColumn).Value2
+	if(lang == null || ! langs.hasOwnProperty(lang)) {
+		MsgBox("“语言类型”为空或填写有误，请重新填写，谢谢！")
+		return
+	}
+	
+	// 处理缺陷大类
+
+	let ws = langs[lang]
+	
+	let masterRow = ws.Cells.Item(Rows.Count, 1).End(xlUp).Row
+
+	let masterDict = {}
+	var masterRange
+
+	let rng = ws.Range("A2:A" + masterRow)
+	for(let i=1; i <= rng.Cells.Count; i++) {
+		let v = rng.Cells.Item(i)
+		if(v.Value2 != null) {
+			if(Target.Column == baseColumn) {
+				masterDict[v.Value2] = ""
+			} else if(v.Value2 == Target.Offset(0, baseColumn - Target.Column).Value2) {
+				masterRange = v.MergeArea
+			}
+		}
+	}
+
+	var generalMasterRange
+	if(generalWs != null) {
+		let generalMasterRow = generalWs.Cells.Item(Rows.Count, 1).End(xlUp).Row
+
+		let rng = generalWs.Range("A2:A" + generalMasterRow)
+		for(let i=1; i <= rng.Cells.Count; i++) {
+			let v = rng.Cells.Item(i)
+			if(v.Value2 != null) {
+				if(Target.Column == baseColumn) {
+					masterDict[v.Value2] = ""
+				} else if(v.Value2 == Target.Offset(0, baseColumn - Target.Column).Value2){
+					generalMasterRange = v.MergeArea
+				}
+			}
+		}
+	}
+
+	// 处理缺陷小类
+
+	if(Target.Column > baseColumn && masterRange == null && generalMasterRange == null) {
+		MsgBox("“缺陷大类”为空或填写有误，请重新填写，谢谢！")
+		return
+	}
+	
+
+	let monitorDict = {}
+	var monitorRange
+
+	if(Target.Column > baseColumn && masterRange != null) {
+		for(let i=1; i <= masterRange.Cells.Count; i++) {
+			let v = masterRange.Cells.Item(i).Offset(0, 1)
+			if(v.Value2 != null) {
+				if(Target.Column == baseColumn + 1) {
+					monitorDict[v.Value2] = ""
+				} else if(v.Value2 == Target.Offset(0, baseColumn + 1 - Target.Column).Value2) {
+					monitorRange = v.MergeArea
+				}
+			}
+		}
+	}
+
+	var generalMonitorRange
+	if(Target.Column > baseColumn && generalMasterRange != null) {
+		for(let i=1; i <= generalMasterRange.Cells.Count; i++) {
+			let v = generalMasterRange.Cells.Item(i).Offset(0, 1)
+			if(v.Value2 != null) {
+				if(Target.Column == baseColumn + 1) {
+					monitorDict[v.Value2] = ""
+				} else if(v.Value2 == Target.Offset(0, baseColumn + 1 - Target.Column).Value2) {
+					generalMonitorRange = v.MergeArea
+				}
+			}
+		}
+	}
+
+	// 处理缺陷细项
+
+	if(Target.Column > baseColumn + 1 && monitorRange == null && generalMonitorRange == null) {
+		MsgBox("“缺陷小类”为空或填写有误，请重新填写，谢谢！")
+		return
+	}
+
+	let detailDict = {}
+
+	if(Target.Column > baseColumn + 1 && monitorRange != null) {
+		for(let i=1; i <= monitorRange.Cells.Count; i++) {
+			let v = monitorRange.Cells.Item(i).Offset(0, 1)
+			if(v.Value2 != null) {
+				if(Target.Column == baseColumn + 2 && !v.Font.Strikethrough) {
+					detailDict[v.Value2.split(",").join("，")] = ""
+				}
+			}
+		}
+	}
+
+	if(Target.Column > baseColumn + 1 && generalMonitorRange != null) {
+		for(let i=1; i <= generalMonitorRange.Cells.Count; i++) {
+			let v = generalMonitorRange.Cells.Item(i).Offset(0, 1)
+			if(v.Value2 != null) {
+				if(Target.Column == baseColumn + 2 && !v.Font.Strikethrough) {
+					detailDict[v.Value2.split(",").join("，")] = ""
+				}
+			}
+		}
+	}
+
+	// 为缺陷添加数据校验
+	let v = Target.Validation
+	v.Delete()
+	switch(Target.Column) {
+		case baseColumn:
+			v.Add(xlValidateList,xlValidAlertStop,xlBetween,Object.keys(masterDict).join(","))
+			break;
+		case baseColumn + 1:
+			v.Add(xlValidateList,xlValidAlertStop,xlBetween,Object.keys(monitorDict).join(","))
+			break;
+		case baseColumn + 2:
+			v.Add(xlValidateList,xlValidAlertStop,xlBetween,Object.keys(detailDict).join(","))
+			break;
+	}
+}
+

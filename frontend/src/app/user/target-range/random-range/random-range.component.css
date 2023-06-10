@@ -1,0 +1,12 @@
+.outDiv {
+  width: 220px;
+  float: left;
+  height: 30px;
+  line-height: 30px;
+  margin-left: 15px;
+}
+
+.innerDiv {
+  width: 150px;
+  float: left;
+}

@@ -1,0 +1,40 @@
+<jigsaw-dialog class="defect-select" width="600px" top="200px" (close)="dispose()" [caption]="_$title">
+    <div jigsaw-body>
+        <div class="defect-config">
+            <div class="config-box">
+              <label>起始行</label>
+                <jigsaw-input class="value" [disabled]="true" [value]="_$startLineNumber"></jigsaw-input>
+              <label>结束行</label>
+                <jigsaw-input class="value" [disabled]="true" [value]="_$endLineNumber"></jigsaw-input>
+            </div>
+            <div class="config-box">
+              <label>缺陷助手</label>
+              <jigsaw-select class="value" [(value)]="_$quickSearch" [optionCount]="_$optionCount"
+                             [data]="_$defectAllDescribe" (valueChange)="_$quickSearchChange()" [clearable]="false" [searchable]="true"></jigsaw-select>
+            </div>
+            <div class="config-box">
+                <label><span class="required">*</span>缺陷大类</label>
+                <jigsaw-select class="value" [(value)]="_$currentDefectClass" labelField="DefectClass" [optionCount]="_$optionCount"
+                              [data]="_$defectClasses" (valueChange)="_$defectClassChange()" [clearable]="false" [searchable]="true"></jigsaw-select>
+            </div>
+            <div class="config-box">
+                <label><span class="required">*</span>缺陷小类</label>
+                <jigsaw-select class="value" [(value)]="_$currentDefectSubClass" labelField="DefectSubClass" [optionCount]="_$optionCount"
+                              [data]="_$defectSubClasses" (valueChange)="_$defectSubClassChange()" [clearable]="false" [searchable]="true"></jigsaw-select>
+            </div>
+            <div class="config-box">
+                <label><span class="required">*</span>缺陷细项</label>
+                <jigsaw-select class="value" [(value)]="_$currentDefectDescribe" [data]="_$defectDescribes"
+                [optionCount]="_$optionCount" [clearable]="false" [searchable]="true"></jigsaw-select>
+            </div>
+            <div class="config-box">
+              <label>缺陷备注</label>
+              <jigsaw-input class="value" [disabled]="false" [(value)]="_$remark" placeholder="请输入缺陷备注信息"></jigsaw-input>
+          </div>
+        </div>
+    </div>
+    <div jigsaw-button-bar>
+        <jigsaw-button colorType="primary" (click)="_$confirm()">确定</jigsaw-button>
+        <jigsaw-button (click)="dispose()">取消</jigsaw-button>
+    </div>
+</jigsaw-dialog>

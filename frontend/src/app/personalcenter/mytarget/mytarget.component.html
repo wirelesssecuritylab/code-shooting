@@ -1,0 +1,47 @@
+<!--靶子列表-->
+<plx-table #plxtbl [data]="data" [columns]="columns" [globalFilterPlaceholder]="'搜索'"
+  [pageSizeSelections]="pageSizeSelections" [pageSize]="10" [showLoading]="showLoading" [loadingPlaceholder]="'加载中...'"
+  [customBtns]="customBtns" [checkModel]=" 'multi;single' " [isPrepareDataOnLocal]="true" [tableType]="'normal'"
+  [resizable]="false" [isSelectAllTableData]="true" [showColFilterToggle]="false" [showCustomCol]="false"
+  [isRelatedCheckboxOnRowClick]="true" [showCheckBox]="true" [showRowDropdown]="false"
+  (checkboxInfoChange)="checkboxInfoChange($event)" [customDetailTemplate]="tagDetailTemplate">
+
+</plx-table>
+
+<!--靶子ID列-->
+<ng-template #targetIdTemplate let-data="data">
+  <span title={{data.id}}>{{data.id.slice(-4)}}</span>
+</ng-template>
+
+<!--子表格-->
+<!--这里的row就是父表格中某一行的数据-->
+<ng-template #tagDetailTemplate let-row="row">
+  <!-- {{row|json}} -->
+  <div class="plx-title-level4" style="padding:8px 16px;">请更新靶子中的下列靶标为新的规范</div>
+  <div style="padding: 8px 16px;">
+    <plx-table [data]="row.tagDetail" [columns]="sonColumns" [showIndexColumn]="true" [showGlobalFilter]="false"
+      [showCustomCol]="false" [showColFilterToggle]="false" [showPagination]="false">
+    </plx-table>
+  </div>
+</ng-template>
+
+<!--操作列-->
+<ng-template #operTemplate let-data="data">
+  <!-- <button class="plx-btn plx-btn-table plx-btn-sm" (click)="checkTarget(data)" >
+  
+    {{'检查'}}
+  </button> -->
+
+  <div *ngIf="!data.isDropdownOpen">
+    <button type="button" class="plx-btn plx-btn-sm plx-btn-table" (click)="checkTarget(data)">检查
+      <i class="plx-ico-down-16" style="color:#1993FF;font-size: 13px;"></i>
+    </button>
+  </div>
+  <div *ngIf="data.isDropdownOpen">
+    <button type="button" class="plx-btn plx-btn-sm plx-btn-table" (click)="checkTarget(data)">收起
+      <i class="plx-ico-down-16 plx-table-dropdown-up" style="color:#1993FF;font-size: 13px;"></i>
+    </button>
+  </div>
+</ng-template>
+
+

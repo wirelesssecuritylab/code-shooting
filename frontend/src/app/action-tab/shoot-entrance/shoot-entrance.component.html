@@ -1,0 +1,63 @@
+<div>
+  <button type="button"
+          class="plx-btn"
+          [disabled]="disabled"
+          (click)="navigator()"
+          placement="right">{{btnLabel}}</button>
+</div>
+
+<div *ngIf="disabled"
+     style="margin-top: 8px;">
+  <plx-systemprompt *ngIf="type == 'startShoot' || type == 'continueShoot' || type == 'restartShoot'"
+                    type="warning"
+                    [text]="btnWarnTip"></plx-systemprompt>
+  <div *ngIf="type == 'view'">
+    <plx-systemprompt *ngIf="!isSubmitAnswer"
+                      type="warning"
+                      [text]="'你尚未提交答卷，不允许查看答卷'"></plx-systemprompt>
+    <plx-systemprompt *ngIf="isSubmitAnswer"
+                      type="warning"
+                      [text]="'打靶比赛尚未结束，不允许查看答卷'"></plx-systemprompt>
+  </div>
+</div>
+
+
+<ng-template #confirmInfo
+             let-c="close"
+             let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">提示</h4>
+    <button type="button"
+            class="close"
+            (click)="d('')">
+      <span class="plx-ico-close-16"></span>
+    </button>
+  </div>
+  <div class="modal-body"
+       style="min-height: 54px;">
+    <div class="row alert-modal"
+         style="min-height: 54px;">
+      <span class="tip-icon info plx-ico-dialog-risk-48"
+            style="color: #1993ff"></span>
+      <div class="tip-info">
+        <div class="alert-title">是否加载上次打靶记录？</div>
+        <div [hidden]="type !== 'restartShoot'"
+             class="alert-result">确定将从上次的答卷开始，取消将从空白靶子开始</div>
+        <div [hidden]="type !== 'continueShoot'"
+             class="alert-result">确定将从上次的草稿开始，取消将从空白靶子开始</div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="form-group">
+      <div class="btnGroup modal-btn">
+        <button type="button"
+                class="plx-btn plx-btn-primary"
+                (click)="confirmNavigator(true)">确定</button>
+        <button type="button"
+                class="plx-btn"
+                (click)="confirmNavigator(false)">取消</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

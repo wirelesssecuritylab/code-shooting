@@ -1,0 +1,21 @@
+{
+    "mappings": [
+        {
+            "id": "48364221",
+            "mapping": {
+                "role_ids": [
+                    "admin",
+                    "targetchooser"
+                ]
+            }
+        },
+        {
+            "id": "48564221",
+            "mapping": {
+                "role_ids": [
+                    "admin"
+                ]
+            }
+        }
+    ]
+}

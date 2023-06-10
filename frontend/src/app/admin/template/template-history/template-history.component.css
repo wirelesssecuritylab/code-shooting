@@ -1,0 +1,15 @@
+.oper-status-icon {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.status-success {
+  background-color: #53BD73;
+}
+
+.status-failed {
+  background-color: #F54C4C;
+}

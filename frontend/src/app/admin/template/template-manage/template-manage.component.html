@@ -1,0 +1,93 @@
+<plx-table [data]="templateList" [columns]="columns" [pageSize]="10" [pageSizeSelections]="pageSizeSelections"
+  [showLoading]="showLoading" [globalFilterPlaceholder]="'搜索'" [loadingPlaceholder]="'加载中...'" [customBtns]="customBtns"
+  [showColFilterToggle]="false" [showCustomCol]="false" [isMultiColSort]="true" [maxMultiSortColNum]="2">
+
+  <span class="plx-table-toolbar-wrapper">
+    <button type="button" class="plx-btn plx-btn-guide" (click)="uploadTemplate()" [hidden]="userRole!=ADMINROLE">
+      <i class="plx-btn-icon plx-ico-new-16"></i>
+      {{'上传规范'}}
+    </button>
+  </span>
+</plx-table>
+
+<!--操作列-->
+<ng-template #operTemplate let-data="data">
+  <button class="plx-btn plx-btn-table plx-btn-sm" (click)="enableTemplate(data)"
+    [disabled]="data.active" [hidden]="userRole!=ADMINROLE">{{'启用'}}</button>
+  <button class="plx-btn plx-btn-table plx-btn-sm" (click)="disableTemplate(data)"
+    [disabled]="!data.active" [hidden]="userRole!=ADMINROLE">{{'停用'}}</button>
+  <button class="plx-btn plx-btn-table plx-btn-sm" (click)="downloadTemplate(data)">{{'下载'}}</button>
+  <button class="plx-btn plx-btn-table plx-btn-sm" (click)="deleteTemplate(data)"
+    [disabled]="data.active" [hidden]="userRole!=ADMINROLE">{{'删除'}}</button>
+</ng-template>
+
+<ng-template #statusTemplate let-data="data">
+  <div>
+    <span class="active-status-icon {{'status-' + data.active}}"></span>
+    <span class="active-status">{{data.active ? '使用中' : '未使用'}}</span>
+  </div>
+</ng-template>
+
+<ng-template #operConfirm let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{operation == 'enable' ? '启用' : '停用'}}</h4>
+    <button type="button" class="close" (click)="d('')">
+      <span class="plx-ico-close-16"></span>
+    </button>
+  </div>
+  <div class="modal-body" style="min-height: 54px;">
+    <div [hidden]="operation !== 'enable'" class="row alert-modal" style="min-height: 54px;">
+      <span class="tip-icon plx-ico-dialog-risk-48" style="color: #1993ff"></span>
+      <div class="tip-info">
+        <div class="alert-title">
+          确定启用{{wsMap.has(curRowData.workspace) ? wsMap.get(curRowData.workspace) : curRowData.workspace}}规范{{curRowData.version}}版本？
+        </div>
+      </div>
+    </div>
+    <div [hidden]="operation === 'enable'" class="row alert-modal" style="min-height: 54px;">
+      <span class="tip-icon warning plx-ico-dialog-risk-48"></span>
+      <div class="tip-info">
+        <div class="alert-title">
+          确定停用{{wsMap.has(curRowData.workspace) ? wsMap.get(curRowData.workspace) : curRowData.workspace}}规范{{curRowData.version}}版本？
+        </div>
+        <div class="alert-result">规范停用后，打靶功能将不可用，需重新启用规范。</div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="form-group">
+      <div class="btnGroup modal-btn">
+        <button type="button" class="plx-btn plx-btn-primary" (click)="operTemplateInfo()">确定</button>
+        <button type="button" class="plx-btn" (click)="c('')">取消</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteConfirm let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">删除</h4>
+    <button type="button" class="close" (click)="d('')">
+      <span class="plx-ico-close-16"></span>
+    </button>
+  </div>
+  <div class="modal-body" style="min-height: 54px;">
+    <div class="row alert-modal" style="min-height: 54px;">
+      <span class="tip-icon error plx-ico-dialog-risk-48"></span>
+      <div class="tip-info">
+        <div class="alert-title">
+          确定删除{{wsMap.has(curRowData.workspace) ? wsMap.get(curRowData.workspace) : curRowData.workspace}}规范{{curRowData.version}}版本？
+        </div>
+        <div class="alert-result">规范删除后，如需使用对应版本，需重新上传。</div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="form-group">
+      <div class="btnGroup modal-btn">
+        <button type="button" class="plx-btn plx-btn-error" (click)="deleteTemplateInfo()">删除</button>
+        <button type="button" class="plx-btn" (click)="c('')">取消</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,38 @@
+{
+    "mappings": [
+        {
+            "id": "admin",
+            "name": "admin",
+            "mapping": {
+                "privilege_names": [
+                    "submitStandardAnswer",
+                    "submitTemplate",
+                    "createRange",
+                    "deleteRange",
+                    "viewRangeScore"
+                ]
+            }
+        },
+        {
+            "id": "shootuser",
+            "name": "shootuser",
+            "mapping": {
+                "privilege_names": [
+                    "rangeView",
+                    "scoreView",
+                    "submitAnswerPaper",
+                    "fillinAnswerPaper"
+                ]
+            }
+        },
+        {
+            "id": "targetchooser",
+            "name": "targetchooser",
+            "mapping": {
+                "privilege_names": [
+                    "editTargetTag"
+                ]
+            }
+        }
+    ]
+}

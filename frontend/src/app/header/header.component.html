@@ -1,0 +1,18 @@
+<header>
+  <div class="app-layout-header" style="box-shadow: rgb(212 224 242 / 30%) 0px 5px 10px 0px;background-color: rgb(255, 255, 255);">
+    <img id="logo" src="/../assets/images/shooting.svg">
+    <app-header-menu></app-header-menu>
+    <div class="app-header-dropdown-menu" (mouseenter)="onEnter()" (mouseleave)="onLeave()">
+      <ul class="wrapper" *ngIf="showDropdown">
+        <li (click)="personalcenter()">个人中心</li>
+        <li (click)="help()">帮助</li>
+        <li (click)="logout()">退出登录</li>
+      </ul>
+      <div class="cur-user">
+        <button id="user-logo" class="plx-icon-btn plx-ico-sm-user-16" placement="top"></button>
+        <span class="user">{{currentUser}}</span>
+        <span id="drop-down" class="plx-ico-down-16"></span>
+      </div>
+    </div>
+  </div>
+</header>

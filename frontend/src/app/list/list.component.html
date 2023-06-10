@@ -1,0 +1,43 @@
+<div class="box-card ant-card ant-card-bordered" style="margin-top: 15px;">
+  <div class="ant-card-body">
+    <div class="ant-table-wrapper">
+      <div class="ant-spin-nested-loading">
+        <div class="ant-spin-container">
+          <div class="ant-table">
+            <div class="ant-table-body">
+          <plx-tag-filtering
+            [options]="options"
+            [columns]="['100%']"
+            (optionChange)="optionChange($event)"
+          >
+          </plx-tag-filtering>
+
+              <plx-table [data]="data"
+                         [columns]="columns"
+                         [globalFilterPlaceholder]="'搜索'"
+                         [pageSizeSelections]="pageSizeSelections"
+                         [pageSize]="10"
+                         [showLoading]="showLoading"
+                         [loadingPlaceholder]="'加载中...'"
+                         [customBtns]="customBtns"
+                         [checkModel]=" 'multi;single' "
+                         [isPrepareDataOnLocal]="true"
+                         [tableType]="'card'"
+                         [resizable]="false"
+                         [isSelectAllTableData]="true"
+                         [showColFilterToggle]="false"
+                         [showCustomCol]="false"
+                         [isRelatedCheckboxOnRowClick]="true"
+              >
+              </plx-table>
+
+              <plx-back-top></plx-back-top>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

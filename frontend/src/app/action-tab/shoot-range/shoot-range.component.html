@@ -1,0 +1,37 @@
+<div>
+  <plx-breadcrumb [model]="breadModel"
+                  [titleMaxWidth]="'500px'"></plx-breadcrumb>
+</div>
+
+<div class="topDiv">
+  <!--成绩概览子组件-->
+  <div class="shoot-range-card">
+    <app-grade-board [rangeId]="rangeId"
+                     [language]="language"
+                     [rangeType]="rangeType"
+                     [isEnd]="isEnd"
+                     [hitNum]="hitNum"
+                     [hitScore]="hitScore"
+                     [totalNum]="totalNum"
+                     [totalScore]="totalScore"
+                     [hundredScore]="hundredScore"></app-grade-board>
+  </div>
+  <!-- 进度看板子组件 -->
+  <div class="shoot-range-card">
+    <div style="margin-top: 20px">
+      <app-progress-board [rangeId]="rangeId"
+                          [language]="language"
+                          [targetId]="targetId"
+                          (targetChanged)="changeTargetId($event)"></app-progress-board>
+    </div>
+  </div>
+</div>
+
+<!--靶场下的靶子tab子组件-->
+<div>
+  <app-tabs [rangeId]="rangeId"
+            [language]="language"
+            [targetId]="targetId"
+            [isMyRange]="isMyRange"
+            (targetChanged1)="changeTargetId1($event)"></app-tabs>
+</div>

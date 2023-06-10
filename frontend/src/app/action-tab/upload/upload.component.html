@@ -1,0 +1,20 @@
+
+<div>
+<!--  <div class="upload-form-config">-->
+<!--    <label><span class="config-required">*</span>语言</label>-->
+<!--    <div class="upload-form-config-select-language">-->
+<!--      <plx-select [options]="lansSelector" [required]="true" [(ngModel)]="languagesValue" (selected)="selectedLanguageCallback()" ></plx-select>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="upload-form-config">-->
+<!--    <label>文件</label>-->
+<!--    <plx-uploder [settings]="pxFileUploaderConfig" [isBreakWord]="true"></plx-uploder>-->
+<!--  </div>-->
+  <plx-uploder #plxSingleDragUploader [settings]="pxFileUploaderConfig" [isBreakWord]="true" [disabled]="disabled"
+               placement="right" [triggers]="'hover'" [plxPopover]="hoverStr"></plx-uploder>
+</div>
+
+<div *ngIf="disabled" style="margin-top: 8px;">
+  <plx-systemprompt type="warning" text="打靶比赛已结束，不允许提交答卷"></plx-systemprompt>
+</div>

@@ -1,0 +1,81 @@
+.app-layout-content {
+  -webkit-box-flex: 1;
+  -ms-flex: auto;
+  flex: auto;
+  min-height: 0;
+}
+
+.app-row-flex-center {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.app-row-flex {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  flex-flow: row wrap;
+}
+
+.app-row-flex, .app-row-flex:after, .app-row-flex:before {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+@media (min-width: 768px){
+  .app-col-md-22 {
+    display: block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 91.66666667%;
+  }
+}
+
+@media (min-width: 576px) {
+  .app-col-sm-22 {
+    display: block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 75%;
+  }
+}
+
+@media (min-width: 576px) {
+  .app-col-sm-1, .app-col-sm-2, .app-col-sm-3, .app-col-sm-4, .app-col-sm-5, .app-col-sm-6, .app-col-sm-7, .app-col-sm-8, .app-col-sm-9, .app-col-sm-10, .app-col-sm-11, .app-col-sm-12, .app-col-sm-13, .app-col-sm-14, .app-col-sm-15, .app-col-sm-16, .app-col-sm-17, .app-col-sm-18, .app-col-sm-19, .app-col-sm-20, .app-col-sm-21, .app-col-sm-22, .app-col-sm-23, .app-col-sm-24 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    float: left;
+  }
+}
+
+@media (min-width: 768px) {
+  .app-col-md-1, .app-col-md-2, .app-col-md-3, .app-col-md-4, .app-col-md-5, .app-col-md-6, .app-col-md-7, .app-col-md-8, .app-col-md-9, .app-col-md-10, .app-col-md-11, .app-col-md-12, .app-col-md-13, .app-col-md-14, .app-col-md-15, .app-col-md-16, .app-col-md-17, .app-col-md-18, .app-col-md-19, .app-col-md-20, .app-col-md-21, .app-col-md-22, .app-col-md-23, .app-col-md-24 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    float: left;
+  }
+}
+
+.app-col {
+  position: relative;
+  min-height: 1px;
+}
+
+.app-col-1, .app-col-2, .app-col-3, .app-col-4, .app-col-5, .app-col-6, .app-col-7, .app-col-8, .app-col-9, .app-col-10, .app-col-11, .app-col-12, .app-col-13, .app-col-14, .app-col-15, .app-col-16, .app-col-17, .app-col-18, .app-col-19, .app-col-20, .app-col-21, .app-col-22, .app-col-23, .app-col-24, .app-col-lg-1, .app-col-lg-2, .app-col-lg-3, .app-col-lg-4, .app-col-lg-5, .app-col-lg-6, .app-col-lg-7, .app-col-lg-8, .app-col-lg-9, .app-col-lg-10, .app-col-lg-11, .app-col-lg-12, .app-col-lg-13, .app-col-lg-14, .app-col-lg-15, .app-col-lg-16, .app-col-lg-17, .app-col-lg-18, .app-col-lg-19, .app-col-lg-20, .app-col-lg-21, .app-col-lg-22, .app-col-lg-23, .app-col-lg-24, .app-col-md-1, .app-col-md-2, .app-col-md-3, .app-col-md-4, .app-col-md-5, .app-col-md-6, .app-col-md-7, .app-col-md-8, .app-col-md-9, .app-col-md-10, .app-col-md-11, .app-col-md-12, .app-col-md-13, .app-col-md-14, .app-col-md-15, .app-col-md-16, .app-col-md-17, .app-col-md-18, .app-col-md-19, .app-col-md-20, .app-col-md-21, .app-col-md-22, .app-col-md-23, .app-col-md-24, .app-col-sm-1, .app-col-sm-2, .app-col-sm-3, .app-col-sm-4, .app-col-sm-5, .app-col-sm-6, .app-col-sm-7, .app-col-sm-8, .app-col-sm-9, .app-col-sm-10, .app-col-sm-11, .app-col-sm-12, .app-col-sm-13, .app-col-sm-14, .app-col-sm-15, .app-col-sm-16, .app-col-sm-17, .app-col-sm-18, .app-col-sm-19, .app-col-sm-20, .app-col-sm-21, .app-col-sm-22, .app-col-sm-23, .app-col-sm-24, .app-col-xs-1, .app-col-xs-2, .app-col-xs-3, .app-col-xs-4, .app-col-xs-5, .app-col-xs-6, .app-col-xs-7, .app-col-xs-8, .app-col-xs-9, .app-col-xs-10, .app-col-xs-11, .app-col-xs-12, .app-col-xs-13, .app-col-xs-14, .app-col-xs-15, .app-col-xs-16, .app-col-xs-17, .app-col-xs-18, .app-col-xs-19, .app-col-xs-20, .app-col-xs-21, .app-col-xs-22, .app-col-xs-23, .app-col-xs-24 {
+  position: relative;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.app-col-xs-1, .app-col-xs-2, .app-col-xs-3, .app-col-xs-4, .app-col-xs-5, .app-col-xs-6, .app-col-xs-7, .app-col-xs-8, .app-col-xs-9, .app-col-xs-10, .app-col-xs-11, .app-col-xs-12, .app-col-xs-13, .app-col-xs-14, .app-col-xs-15, .app-col-xs-16, .app-col-xs-17, .app-col-xs-18, .app-col-xs-19, .app-col-xs-20, .app-col-xs-21, .app-col-xs-22, .app-col-xs-23, .app-col-xs-24 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  float: left;
+}
+
+.mainContent {
+  margin: 0 40px;
+}

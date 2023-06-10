@@ -1,0 +1,40 @@
+
+<button class="plx-btn plx-btn-table plx-btn-sm" (click)="goToRange()">{{'查看成绩'}}</button>
+<button class="plx-btn plx-btn-table plx-btn-sm" (click)="modifyRange()">{{'编辑'}}</button>
+<button class="plx-btn plx-btn-table plx-btn-sm" (click)="openConfirmDlg(content)">{{'删除'}}</button>
+<!-- <div plxDropdown class="plx-btn-more plx-btn-more-sm">
+  <button class="plx-btn plx-btn-table plx-btn-sm dropdown-toggle" plxDropdownToggle>更多</button>
+  <div class="dropdown-menu">
+    <button class="dropdown-item">下拉示例</button>
+
+  </div>
+</div> -->
+
+
+
+<!--删除靶场模态框-->
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+      <h4 class="modal-title">删除</h4>
+      <button type="button" class="close" (click)="d('Cross click')">
+          <span class="plx-ico-close-16"></span>
+      </button>
+  </div>
+  <div class="modal-body" style="min-height: 54px;">
+      <div class="row alert-modal" style="min-height: 54px;">
+          <span class="tip-icon error plx-ico-dialog-risk-48"></span>
+          <div class="tip-info">
+              <div class="alert-title">确定删除靶场:{{rowData.name}}？</div>
+              <div class="alert-result">靶场删除后,该靶场相关的打靶成绩将一并删除!</div>
+          </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+      <div class="form-group">
+          <div class="btnGroup modal-btn">
+              <button type="button" class="plx-btn plx-btn-error" (click)="deleteRange();c('Close click')">删除</button>
+              <button type="button" class="plx-btn" (click)="c('Close click')">取消</button>
+          </div>
+      </div>
+  </div>
+</ng-template>

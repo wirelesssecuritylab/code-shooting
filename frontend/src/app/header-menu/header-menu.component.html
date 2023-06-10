@@ -1,0 +1,10 @@
+<div>
+  <ul>
+    <li *ngFor="let item of menuList  let idx = index" (click)="clickMenu(idx)">
+      {{item.menuName}}
+    </li>
+  </ul>
+  <div class="bottomLine">
+    <div class="blueline{{menuIdx+1}}"></div>
+  </div>
+</div>

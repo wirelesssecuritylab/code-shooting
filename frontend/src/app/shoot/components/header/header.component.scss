@@ -1,0 +1,32 @@
+.header {
+    width: 100%;
+    height: 48px;
+    background-color: #3F8EE2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .alert {
+        color: var(--bg-body);
+        margin-right: 30px;
+    }
+
+    .i18n {
+        color: var(--bg-body);
+        margin-right: 30px;
+    }
+
+    .img {
+        width: 32px;
+        height: 32px;
+        border: 1px solid #9FC5F0;
+        border-radius: 50%;
+        background-color: #9FC5F0;
+        margin-right: 3px;
+    }
+
+    .name {
+        color: var(--bg-body);
+        margin-right: 30px;
+    }
+}

@@ -1,0 +1,27 @@
+<plx-tabset #plxTabset
+            [minWidth]="'100px'"
+            [maxDropdownHeight]="'400px'"
+            [isShowCustomArea]="true"
+            [activeId]="activeTabId"
+            (tabChange)="tabChange($event)">
+  <plx-tab *ngFor="let tab of tabs"
+           [id]="tab?.id"
+           [title]="tab?.title"
+           [fixation]="tab?.fixation">
+    <ng-template pxTabContent>
+      <!-- <span>{{nextTabId}}</span> -->
+      <app-action-tab [targetId]="entranceTabId" [isMyRange]="isMyRange"></app-action-tab>
+    </ng-template>
+  </plx-tab>
+
+  <div>
+    <button type="button"
+            class="plx-btn plx-btn-primary"></button>
+  </div>
+</plx-tabset>
+<ng-template #content>
+  <div class="modal-header">
+    <h4 class="modal-title">{{ title }}</h4>
+  </div>
+
+</ng-template>

@@ -1,0 +1,134 @@
+.app-card-bordered {
+  border: 1px solid #e8e8e8;
+}
+
+.app-card {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0,0,0,.65);
+  font-size: 14px;
+  font-variapp: tabular-nums;
+  line-height: 1.5;
+  list-style: none;
+  -webkit-font-feature-settings: "tnum";
+  font-feature-settings: "tnum";
+  position: relative;
+  background: #fff;
+  border-radius: 2px;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+
+.app-card-body {
+  padding: 24px;
+  zoom: 1;
+}
+
+.cation-middle {
+
+  padding: 10px 20px 10px 30px;
+  font-size: 14px;
+}
+
+
+
+.cation-filter {
+  padding: 10px 20px 10px 30px;
+}
+
+.plx-anchor-demo-wrapper {
+  position: relative;
+}
+
+.plx-anchor-demo-div {
+  height: auto;
+  border-left-width: 1px;
+  border-left-style: solid;
+  position: relative;
+  display: table-cell;
+  vertical-align: top;
+  border-left-color: #D9D9D9;
+}
+
+.plx-anchor-demo-div:before {
+  content: "";
+  height: 9px;
+  width: 9px;
+  position: absolute;
+  display: block;
+  border: 2px solid #1890ff;
+  border-radius: 50%;
+  background: #fff;
+  left: -5px;
+  top: 0;
+}
+
+.plx-anchor-demo-id {
+  position: absolute;
+  top: -80px;
+}
+
+.plx-anchor-demo-title {
+  margin-top: -4px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 16px;
+  font-weight: 700;
+  width: 60px;
+  height: 21px;
+}
+
+.plx-anchor-demo-content {
+  margin-top: 29px;
+  margin-left: 16px;
+}
+
+.plx-systemprompt-prompt {
+  border-width: 1px;
+  border-style: solid;
+  background-color: #e6f5ff;
+  border-color: #94d2ff;
+}
+
+.plx-systemprompt-content {
+  font-family: "Helvetica Neue","PingFang SC",Tahoma,"Microsoft Yahei";
+  text-align: left;
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
+  line-height: 1.5;
+  overflow: auto;
+  display: inline-flex;
+  width: auto;
+}
+
+.plx-systemprompt-text {
+  color: #4d4d4d;
+  font-size: 12px!important;
+  margin-bottom: 0;
+  word-wrap: break-word;
+  word-break: normal;
+  position: relative;
+  top: 1px;
+}
+.content-main {
+  min-height: 600px;
+  text-align: center;
+}
+
+.content-error{
+  margin-top: 200px;
+  width: 143px;
+}
+
+.content-title{
+  font-size: 20px;
+  color: #4d5761;
+  line-height: 66px;
+}
+.content-tip {
+  font-size: 15px;
+  color: #b3b4b5;
+}

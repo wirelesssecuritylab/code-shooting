@@ -1,0 +1,97 @@
+<div [hidden]="valid"
+     class="content-main">
+  <img [src]="errImg"
+       class="content-error">
+  <p class="content-title">{{errTitle}}</p>
+  <p class="content-tip">{{errorTip}}
+</div>
+<div [hidden]="!valid"
+     class="box-card app-card app-card-bordered"
+     style="margin-top: 15px;">
+  <div class="app-card-body">
+    <div class="cation-middle">
+      <div class="cation-filter"
+           style="width: 100%">
+        <div class="plx-title-level1"
+             style="margin-bottom: 20px;">{{rangeInfo?.name}} - {{language}}</div>
+
+        <div class="plx-anchor-demo-wrapper">
+          <plx-anchor [items]="items"
+                      [isHashRouter]="true"
+                      [fixed]="false">
+          </plx-anchor>
+          <div>
+            <div id="'containerId1'">
+              <div class="plx-anchor-demo-div"
+                   style="width: 800px">
+                <span id="anchor1"
+                      class="plx-anchor-demo-id"></span>
+                <div class="plx-anchor-demo-title"><span>{{shootTypeMap[shootType]}}</span></div>
+                <div class="plx-anchor-demo-content">
+                  <app-shoot-entrance #shootEntrance
+                                      [targetId]="targetId"
+                                      [targets]="targets"
+                                      [userId]="userId"
+                                      [disabled]="this.showShootTab()"
+                                      [type]="shootType"
+                                      [language]="language"
+                                      [rangeName]="rangeInfo?.name"
+                                      [rangeId]="rangeId"
+                                      [isMyRange]="isMyRange"
+                                      [records]="shootType == 'restartShoot' ? targetRecords:targetDrafts"
+                                      [rangeType]="rangeInfo.type || rangeType"></app-shoot-entrance>
+                  <div style="height:20px"></div>
+                </div>
+              </div>
+            </div>
+            <div id="'containerId2'"
+                 class="ng-star-inserted">
+              <div class="plx-anchor-demo-div">
+                <span id="anchor2"
+                      class="plx-anchor-demo-id"></span>
+                <div class="plx-anchor-demo-title"><span>查看成绩</span></div>
+                <div class="plx-anchor-demo-content">
+                  <app-query [rangeId]="rangeId"
+                             [targetId]="targetId"
+                             [language]="language"
+                             [userId]="userId"
+                             [disabled]="this.showQueryTab()"
+                             [submit]="submit"
+                             [rangeType]="rangeInfo.type || rangeType"></app-query>
+                  <div style="height:20px"></div>
+                </div>
+              </div>
+            </div>
+            <div id="'containerId3'">
+              <div class="plx-anchor-demo-div"
+                   style="width: 800px">
+                <span id="anchor3"
+                      class="plx-anchor-demo-id"></span>
+                <div class="plx-anchor-demo-title"><span>查看答卷</span></div>
+                <div class="plx-anchor-demo-content">
+                  <app-shoot-entrance [targets]="targets"
+                                      [targetId]="targetId"
+                                      [userId]="userId"
+                                      [disabled]="this.showViewTab()"
+                                      [type]="'view'"
+                                      [language]="language"
+                                      [rangeName]="rangeInfo?.name"
+                                      [rangeId]="rangeId"
+                                      [isMyRange]="isMyRange"
+                                      [records]="targetRecords"
+                                      [isSubmitAnswer]="haveSubmitAnswer"
+                                      [targetAnswers]="targetAnswers"
+                                      [rangeType]="rangeInfo.type || rangeType"></app-shoot-entrance>
+                  <div style="height:20px"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <plx-back-top></plx-back-top>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

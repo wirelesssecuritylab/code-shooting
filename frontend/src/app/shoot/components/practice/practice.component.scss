@@ -1,0 +1,59 @@
+.target-box {
+    display: flex;
+    height: 100%;
+
+    .files-tree {
+        background-color: #F5F5F5;
+    }
+
+    .content-code {
+        flex: 1;
+        // margin: 0 20px;
+        height: calc(100vh - 150px);
+        overflow-x: scroll;
+        overflow-y: hidden;
+        padding-bottom: 50px;
+
+        .tools-bar {
+            display: flex;
+            // align-items: center;
+            // margin: 10px 20px;
+            margin: 0 20px 10px 20px;
+            position: relative;
+            height: 35px;
+
+            .bar {
+                width: calc(100vw - 400px);
+                margin-right: 10px;
+            }
+
+            .submit {
+                position: absolute;
+                right: -20px;
+                margin-bottom: 0px;
+            }
+
+            .btn{
+              position: absolute;
+              right: 80px;
+              margin-bottom: 0px;
+            }
+
+            .next {
+              position: absolute;
+              right: 180px;
+              margin-bottom: 0px;
+            }
+        }
+    }
+}
+
+/*选中代码区背景色*/
+::ng-deep.selected-code {
+    background: #CAEEEE;
+}
+
+/*代码取消选中时的背景色*/
+::ng-deep.non-selected-code {
+  background:  #fffffe;
+}

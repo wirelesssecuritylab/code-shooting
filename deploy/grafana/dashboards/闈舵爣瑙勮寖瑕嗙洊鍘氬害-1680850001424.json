@@ -1,0 +1,572 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_POSTGRESQL",
+      "label": "PostgreSQL",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "postgres",
+      "pluginName": "PostgreSQL"
+    }
+  ],
+  "__elements": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "8.4.5"
+    },
+    {
+      "type": "datasource",
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "8.4.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select defect_pos.defect_class, defect_pos.defect_subclass, defect_pos.defect_describe, \ncase when sum(defect_num) isnull then 0 else sum(defect_num) end as defect_thick \nfrom (\n  select * \n  from defect_pos \n  where language='C&C++' or language='通用'\n)defect_pos left outer join (select * from target_defect_stat_pos \n  where target_defect_stat_pos.target_id in (\n    select target_pos.id\n    from target_pos\n    where target_pos.language in ('C', 'C++')\n  )\n)target_defect_stat_pos \non defect_pos.defect_id=target_defect_stat_pos.defect_id\ngroup by defect_pos.defect_class,defect_pos.defect_subclass, defect_pos.defect_describe\norder by defect_thick desc",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "C&C++语言规范覆盖厚度",
+      "type": "table"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 14,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "8.4.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select defect_pos.defect_class, defect_pos.defect_subclass, defect_pos.defect_describe, \ncase when sum(defect_num) isnull then 0 else sum(defect_num) end as defect_thick \nfrom (\n  select * \n  from defect_pos \n  where language='Java' or language='通用'\n)defect_pos left outer join (select * from target_defect_stat_pos \n  where target_defect_stat_pos.target_id in (\n    select target_pos.id\n    from target_pos\n    where target_pos.language = 'Java'\n  )\n)target_defect_stat_pos \non defect_pos.defect_id=target_defect_stat_pos.defect_id\ngroup by defect_pos.defect_class,defect_pos.defect_subclass, defect_pos.defect_describe\norder by defect_thick desc",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Java语言规范覆盖厚度",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 6,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "8.4.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select defect_pos.defect_class, defect_pos.defect_subclass, defect_pos.defect_describe, \ncase when sum(defect_num) isnull then 0 else sum(defect_num) end as defect_thick \nfrom (\n  select * \n  from defect_pos \n  where language='Go' or language='通用'\n)defect_pos left outer join (select * from target_defect_stat_pos \n  where target_defect_stat_pos.target_id in (\n    select target_pos.id\n    from target_pos\n    where target_pos.language = 'Go'\n  )\n)target_defect_stat_pos \non defect_pos.defect_id=target_defect_stat_pos.defect_id\ngroup by defect_pos.defect_class,defect_pos.defect_subclass, defect_pos.defect_describe\norder by defect_thick desc",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Go语言规范覆盖厚度",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 8,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "8.4.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select defect_pos.defect_class, defect_pos.defect_subclass, defect_pos.defect_describe, \ncase when sum(defect_num) isnull then 0 else sum(defect_num) end as defect_thick \nfrom (\n  select * \n  from defect_pos \n  where language='JavaScript' or language='通用'\n)defect_pos left outer join (select * from target_defect_stat_pos \n  where target_defect_stat_pos.target_id in (\n    select target_pos.id\n    from target_pos\n    where target_pos.language = 'JavaScript'\n  )\n)target_defect_stat_pos \non defect_pos.defect_id=target_defect_stat_pos.defect_id\ngroup by defect_pos.defect_class,defect_pos.defect_subclass, defect_pos.defect_describe\norder by defect_thick desc",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "JavaScript语言规范覆盖厚度",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 10,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "8.4.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select defect_pos.defect_class, defect_pos.defect_subclass, defect_pos.defect_describe, \ncase when sum(defect_num) isnull then 0 else sum(defect_num) end as defect_thick \nfrom (\n  select * \n  from defect_pos \n  where language='Python' or language='通用'\n)defect_pos left outer join (select * from target_defect_stat_pos \n  where target_defect_stat_pos.target_id in (\n    select target_pos.id\n    from target_pos\n    where target_pos.language = 'Python'\n  )\n)target_defect_stat_pos \non defect_pos.defect_id=target_defect_stat_pos.defect_id\ngroup by defect_pos.defect_class,defect_pos.defect_subclass, defect_pos.defect_describe\norder by defect_thick desc",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Python语言规范覆盖厚度",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 12,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "8.4.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select defect_pos.defect_class, defect_pos.defect_subclass, defect_pos.defect_describe, \ncase when sum(defect_num) isnull then 0 else sum(defect_num) end as defect_thick \nfrom (\n  select * \n  from defect_pos \n  where language='TypeScript' or language='通用'\n)defect_pos left outer join (select * from target_defect_stat_pos \n  where target_defect_stat_pos.target_id in (\n    select target_pos.id\n    from target_pos\n    where target_pos.language = 'TypeScript'\n  )\n)target_defect_stat_pos \non defect_pos.defect_id=target_defect_stat_pos.defect_id\ngroup by defect_pos.defect_class,defect_pos.defect_subclass, defect_pos.defect_describe\norder by defect_thick desc",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "TypeScript语言规范覆盖厚度",
+      "type": "table"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 35,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "2023-01-29T10:51:07.408Z",
+    "to": "2023-01-31T10:51:07.408Z"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "靶标规范覆盖厚度",
+  "uid": "target_defect_thick",
+  "version": 6,
+  "weekStart": ""
+}

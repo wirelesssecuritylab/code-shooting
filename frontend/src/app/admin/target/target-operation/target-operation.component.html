@@ -1,0 +1,29 @@
+<button class="plx-btn plx-btn-table plx-btn-sm" (click)="modifyTarget()" [disabled]="rowData.owner != userId">{{'编辑'}}</button>
+<button class="plx-btn plx-btn-table plx-btn-sm" (click)="open(content)" [disabled]="rowData.owner != userId">{{'删除'}}</button>
+
+<!--删除模态框-->
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+      <h4 class="modal-title">删除</h4>
+      <button type="button" class="close" (click)="d('Cross click')">
+          <span class="plx-ico-close-16"></span>
+      </button>
+  </div>
+  <div class="modal-body" style="min-height: 54px;">
+      <div class="row alert-modal" style="min-height: 54px;">
+          <span class="tip-icon error plx-ico-dialog-risk-48"></span>
+          <div class="tip-info">
+              <div class="alert-title">确定删除{{rowData.name}}？</div>
+              <!-- <div class="alert-result">***********数据删除的后果描述信息。</div> -->
+          </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+      <div class="form-group">
+          <div class="btnGroup modal-btn">
+              <button type="button" class="plx-btn plx-btn-error" (click)="deleteTarget();c('Close click')">删除</button>
+              <button type="button" class="plx-btn" (click)="c('Close click')">取消</button>
+          </div>
+      </div>
+  </div>
+</ng-template>

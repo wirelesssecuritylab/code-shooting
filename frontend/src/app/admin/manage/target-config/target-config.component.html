@@ -1,0 +1,65 @@
+<plx-table #plxtbl [data]="data"
+           [columns]="columns"
+           [showPagination]="false"
+           [showColFilterToggle]="false"
+           [showCustomCol]="false"
+           [showGlobalFilter]="false"
+           [showNoDataMessage]="false"
+>
+</plx-table>
+<button class="plx-icon-btn plx-icon-word-btn plx-ico-new-16" style="margin-top: 8px;" (click)="addData()">
+  <span class="plx-icon-word-btn-text">新增靶子</span>
+</button>
+
+<!--语言下拉框框-->
+<ng-template #langTemplate let-data="data">
+  <div style="width:100%;">
+    <plx-select #mySelect
+                [size]="'sm'"
+                [options]="langOptions"
+                [(ngModel)]="data.language"
+                (ngModelChange)="initTargetList(data)"
+    >
+    </plx-select>
+</div>
+</ng-template>
+
+<!--院级标签过滤项-->
+<ng-template #instituteLabelTemplate let-data="data">
+  <div style="width:100%;">
+    <plx-select #mySelect
+                [size]="'sm'"
+                [options]="instituteLabelOptions"
+                [(ngModel)]="data.instituteLabel"
+                (ngModelChange)="initTargetList(data)"
+                [isShowDeleteBtn]="true"
+                [multiple]="true"
+    >
+    </plx-select>
+</div>
+</ng-template>
+
+<!--靶子下拉框列-->
+<ng-template #targetTemplate let-data="data">
+  <div style="width:100%;">
+    <plx-select #mySelect
+                [size]="'sm'"
+                [options]="data.targetOptions"
+                [(ngModel)]="data.target"
+                (ngModelChange)="emitTableData()"
+                [required]=true
+    >
+    </plx-select>
+</div>
+</ng-template>
+
+<!--删除列-->
+<ng-template #operTemplate let-data="data">
+  <span class="plx-ico-remove-16" style="font-size: 16px;color: #e43232;cursor: pointer;"
+        (click)="deleteData(data)"
+        [plxTooltip]="'移除'"
+        placement="top"
+        [triggers]="'hover'"
+        [container]="'body'"
+  ></span>
+</ng-template>

@@ -1,0 +1,79 @@
+.ant-card-bordered {
+  border: 1px solid #e8e8e8;
+}
+
+.ant-card {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0,0,0,.65);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  list-style: none;
+  -webkit-font-feature-settings: "tnum";
+  font-feature-settings: "tnum";
+  position: relative;
+  background: #fff;
+  border-radius: 2px;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+
+.ant-card-body {
+  padding: 24px;
+  zoom: 1;
+}
+
+.ant-table-wrapper {
+  margin-top: 15px;
+  zoom: 1;
+}
+
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.ant-spin-nested-loading {
+  position: relative;
+}
+
+.ant-spin-container {
+  position: relative;
+  -webkit-transition: opacity .3s;
+  transition: opacity .3s;
+}
+
+.ant-table {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0,0,0,.65);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  list-style: none;
+  -webkit-font-feature-settings: "tnum";
+  font-feature-settings: "tnum";
+  position: relative;
+  clear: both;
+}
+
+.ant-table-body {
+  -webkit-transition: opacity .3s;
+  transition: opacity .3s;
+}
+
+table {
+  display: table;
+  border-collapse: separate;
+  box-sizing: border-box;
+  text-indent: initial;
+  border-spacing: 2px;
+  border-color: grey;
+}
+

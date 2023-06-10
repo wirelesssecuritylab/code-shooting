@@ -1,0 +1,23 @@
+<!--面包屑-->
+<div style="margin-bottom: 20px;">
+  <plx-breadcrumb [model]="breadModel" [titleMaxWidth]="'500px'"></plx-breadcrumb>
+</div>
+<plx-table [data]="templateHistoryList"
+           [columns]="columns"
+           [pageSize]="10"
+           [pageSizeSelections]="pageSizeSelections"
+           [showLoading]="showLoading"
+           [globalFilterPlaceholder]="'搜索'"
+           [loadingPlaceholder]="'加载中...'"
+           [customBtns]="customBtns"
+           [showColFilterToggle]="false"
+           [showCustomCol]="false"
+>
+</plx-table>
+
+<ng-template #statusTemplate let-data="data">
+  <div>
+    <span class="oper-status-icon {{'status-' + data.opStatus}}"></span>
+    <span class="oper-status">{{data.opStatus == 'success' ? '成功' : '失败'}}</span>
+  </div>
+</ng-template>

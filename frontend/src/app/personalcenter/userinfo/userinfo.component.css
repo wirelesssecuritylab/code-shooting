@@ -1,0 +1,51 @@
+.personal-center-heading {
+  border-bottom: 1px solid #D3D3D3;
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 50px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.personal-center-container {
+  padding-top: 10px;
+}
+
+.personal-center-row {
+  padding: 10px 20px;
+}
+
+.personal-center-edit {
+  color: #4D4D4D !important;
+}
+
+.personal-center-edit:hover {
+  border-bottom-color: transparent !important;
+}
+
+.attr-label {
+  padding-right:0px;
+  padding-left: 20px;
+  float:left;
+  font-size: 14px;
+  font-weight: normal;
+  width: 120px;
+}
+.attr-value {
+  padding-left:0px;
+  padding-right:10px;
+  float:left;
+  font-size: 14px;
+  font-weight: normal;
+}
+.refresh-info {
+  font-size: 20px;
+  margin-left: 10px;
+  padding-top: 3px;
+  cursor: pointer;
+}
+
+.refresh-info:hover {
+  color: #1993ff;
+}

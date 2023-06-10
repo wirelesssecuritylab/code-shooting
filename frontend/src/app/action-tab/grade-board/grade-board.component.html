@@ -1,0 +1,34 @@
+<div class="grade-board">
+  <div class="grade-board-title">成绩看板</div>
+
+  <div *ngIf="(rangeType == '比赛' || rangeType == 'compete') && !isEnd" class="grade-board-num" style="margin-top: 10px;">
+    未知
+  </div>
+
+  <div
+    *ngIf="
+      ((rangeType == '比赛' || rangeType == 'compete') && isEnd) ||
+      rangeType == '练习' || rangeType == 'test'
+    "
+  >
+    <div>
+      <img class="grade-board-img" id="logo" src="/../assets/images/shooting.svg">
+      <span class="grade-board-num"> {{ hitNum }} </span>
+      <span class="grade-board-score"> / {{ totalNum }} </span>
+      <span class="grade-board-chinese"> 命中靶环总数/靶环总数 </span>
+    </div>
+
+    <div>
+      <img class="grade-board-img" id="logo" src="/../assets/images/shooting.svg">
+      <span class="grade-board-num"> {{ hitScore }} </span>
+      <span class="grade-board-score"> / {{ totalScore }} </span>
+      <span class="grade-board-chinese"> 命中靶环总分/靶环总分 </span>
+    </div>
+<div>
+  <img class="grade-board-img" id="logo" src="/../assets/images/shooting.svg">
+  <span class="grade-board-num"> {{ hundredScore }} </span>
+  <span class="grade-board-chinese"> 百分制总分 </span>
+</div>
+
+  </div>
+</div>
