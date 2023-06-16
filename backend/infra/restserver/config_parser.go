@@ -1,15 +1,14 @@
 package restserver
 
 import (
+	"code-shooting/infra/common/constants"
 	"net"
 
-	"code-shooting/infra/common"
 	"code-shooting/infra/restserver/internal"
-
-	"github.com/pkg/errors"
 
 	marsconfig "code-shooting/infra/config"
 	middlewareconfig "code-shooting/infra/restserver/config"
+	"github.com/pkg/errors"
 )
 
 type configParsingService interface {
@@ -37,7 +36,7 @@ func (s *configParser) buildMultDTO(config marsconfig.Config) (internal.MultRest
 	}
 
 	var multDTO internal.MultRestServerDTO
-	err := config.Get(common.ROOT+"."+common.REST_SERVER, &multDTO)
+	err := config.Get(constants.ROOT+"."+constants.REST_SERVER, &multDTO)
 	if err != nil {
 		return nil, errors.Wrap(err, "get restservers config")
 	}

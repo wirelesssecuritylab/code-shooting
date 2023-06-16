@@ -1,9 +1,8 @@
 package restserver
 
 import (
-	"code-shooting/infra/common"
+	"code-shooting/infra/common/constants"
 	"code-shooting/infra/restserver/internal"
-
 	"github.com/pkg/errors"
 	"go.uber.org/fx"
 
@@ -81,7 +80,7 @@ func (mult *MultRestServer) GetRestServerByName(name string) (*RestServer, error
 }
 
 func (mult *MultRestServer) RegisterConfigChangeEvent() {
-	marsconfig.RegisterEventHandler(common.ROOT+"."+common.REST_SERVER, func(e []*model.Event) {
+	marsconfig.RegisterEventHandler(constants.ROOT+"."+constants.REST_SERVER, func(e []*model.Event) {
 		multConf, err := GetConfigParser().Parse(utils.Config)
 		if err != nil {
 			logger.Error("parse utils.config error: ", err.Error())

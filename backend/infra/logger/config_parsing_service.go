@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"sync"
 
-	"code-shooting/infra/common"
+	"code-shooting/infra/common/constants"
 	"code-shooting/infra/config"
 	"code-shooting/infra/logger/internal"
 

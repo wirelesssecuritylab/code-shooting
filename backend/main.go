@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -49,21 +50,21 @@ func main() {
 		log.Fatal("config path is empty")
 		return
 	}
+	fmt.Println("---------1---------------")
 	loggerInstance, err := logger.NewLogger(configPath)
-
+	fmt.Println(configPath)
 	if err != nil {
 		log.Fatal("failed create code-shooting logger: ", err)
 		return
 	}
 	logger.SetLogger(loggerInstance.Named("code-shooting"))
-
+	fmt.Println("---------2---------------")
 	app := fx.New(
 		fx.Logger(logger.GetLogger().CreateStdLogger()),
 		fx.StartTimeout(15*time.Second),
 		fx.StopTimeout(15*time.Second),
 		config.NewModule(configPath),
 		restserver.NewModule(),
-
 		sql.NewModule(), fx.Invoke(database.InitGormDb),
 
 		fx.Invoke(func() error {
@@ -96,6 +97,7 @@ func main() {
 		metricaop.NewExporterModule(),
 	)
 
+	fmt.Println("---------3---------------")
 	startCtx, cancel := context.WithTimeout(context.Background(), app.StartTimeout())
 	defer cancel()
 	if err := app.Start(startCtx); err != nil {

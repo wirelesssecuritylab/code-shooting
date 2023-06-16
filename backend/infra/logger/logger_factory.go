@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"code-shooting/infra/common"
+	"code-shooting/infra/common/constants"
 	"code-shooting/infra/config"
 	"code-shooting/infra/config/model"
 	"code-shooting/infra/logger/internal"
@@ -22,7 +22,7 @@ func NewLogger(configPath string, options ...Option) (Logger, error) {
 		return nil, errors.Wrap(err, "build config")
 	}
 	var namespace string
-	if err = conf.Get(common.ROOT+"."+common.NODE+"."+common.APP_NAMESPACE, &namespace); err != nil && !config.IsNotExist(err) {
+	if err = conf.Get(constants.ROOT+"."+constants.NODE+"."+constants.APP_NAMESPACE, &namespace); err != nil && !config.IsNotExist(err) {
 		return nil, errors.Wrap(err, "get namespace")
 	}
 	internal.SetNamespace(namespace)
@@ -70,22 +70,38 @@ func (s *loggerFactoryImpl) CreateLogger(cfg internal.Config, options ...Option)
 }
 
 func (s *loggerFactoryImpl) createZapCore(cfg internal.Config, atomicLevel zap.AtomicLevel, options ...Option) (zapcore.Core, []func(), error) {
+	syncs, closers := s.createWriteSyncs(cfg.OutputPaths, cfg.RotateConfig)
 	zapEncoder, err := s.createZapEncoder(cfg.Encoder, cfg.Format, options...)
 	if err != nil {
 		return nil, nil, errors.Wrap(err, "create encoder")
 	}
-	core := zapcore.NewCore(zapEncoder, zapcore.NewMultiWriteSyncer(), atomicLevel)
-	return core, nil, nil
+	core := zapcore.NewCore(zapEncoder, zapcore.NewMultiWriteSyncer(syncs...), atomicLevel)
+	return core, closers, nil
 
 }
 
 func (s *loggerFactoryImpl) CreateDefaultLogger() Logger {
 	atomicLevel := zap.NewAtomicLevelAt(zap.InfoLevel)
-	core := zapcore.NewCore(s.createPlainEncoder(internal.CustomFormat{}), zapcore.NewMultiWriteSyncer(), atomicLevel)
+	syncs, closers := s.createWriteSyncs([]string{"stdout"}, internal.RotateConfig{})
+	core := zapcore.NewCore(s.createPlainEncoder(internal.CustomFormat{}), zapcore.NewMultiWriteSyncer(syncs...), atomicLevel)
 	zapOptions := []zap.Option{zap.Development(), zap.AddCaller(), zap.AddCallerSkip(1)}
-	return &logger{level: &atomicLevel, zLogger: zap.New(core, zapOptions...)}
+	return &logger{level: &atomicLevel, zLogger: zap.New(core, zapOptions...), closers: closers}
 }
 
+func (s *loggerFactoryImpl) createWriteSyncs(outputPaths []string, rotateCfg internal.RotateConfig) ([]zapcore.WriteSyncer, []func()) {
+	var syncs []zapcore.WriteSyncer
+	var closers []func()
+
+	for _, outputPath := range outputPaths {
+		sink, err := getSinkFactory().createSink(outputPath, rotateCfg)
+		if err == nil {
+			syncs = append(syncs, sink.syncer)
+			closers = append(closers, sink.closer)
+		}
+	}
+
+	return syncs, closers
+}
 
 func (s *loggerFactoryImpl) createZapEncoder(encoder internal.Encoder, format internal.CustomFormat, options ...Option) (zapcore.Encoder, error) {
 	builders := map[internal.Encoder]func() zapcore.Encoder{
@@ -279,7 +295,7 @@ func (s *logger) registerConfigChangeEvent() {
 }
 
 func (s *logger) registerLogLevelEventHandler() {
-	config.RegisterEventHandler(common.ROOT+"."+common.LOG_LEVEL, func(es []*model.Event) {
+	config.RegisterEventHandler(constants.ROOT+"."+constants.LOG_LEVEL, func(es []*model.Event) {
 		if len(es) > 0 {
 			level := es[0].Value.(string)
 			s.SetLevel(level)
@@ -288,7 +304,7 @@ func (s *logger) registerLogLevelEventHandler() {
 }
 
 func (s *logger) registerNamespaceEventHandler() {
-	config.RegisterEventHandler(common.ROOT+"."+common.NODE+"."+common.APP_NAMESPACE, func(es []*model.Event) {
+	config.RegisterEventHandler(constants.ROOT+"."+constants.NODE+"."+constants.APP_NAMESPACE, func(es []*model.Event) {
 		if len(es) > 0 {
 			ns := es[0].Value.(string)
 			internal.SetNamespace(ns)
@@ -297,7 +313,7 @@ func (s *logger) registerNamespaceEventHandler() {
 }
 
 func (s *logger) registerRotateConfigEventHandler() {
-	config.RegisterEventHandler(common.ROOT+"."+common.LOG_ROTATE_CONFIG, func(es []*model.Event) {
+	config.RegisterEventHandler(constants.ROOT+"."+constants.LOG_ROTATE_CONFIG, func(es []*model.Event) {
 		if len(es) > 0 {
 			for _, e := range es {
 				value, ok := e.Value.(int)
@@ -305,11 +321,11 @@ func (s *logger) registerRotateConfigEventHandler() {
 					continue
 				}
 				switch e.Key {
-				case common.ROOT + "." + common.LOG_ROTATE_CONFIG_MAXSIZE:
+				case constants.ROOT + "." + constants.LOG_ROTATE_CONFIG_MAXSIZE:
 					s.cfg.RotateConfig.MaxSize = value
-				case common.ROOT + "." + common.LOG_ROTATE_CONFIG_MAXBACKUPS:
+				case constants.ROOT + "." + constants.LOG_ROTATE_CONFIG_MAXBACKUPS:
 					s.cfg.RotateConfig.MaxBackups = value
-				case common.ROOT + "." + common.LOG_ROTATE_CONFIG_MAXAGE:
+				case constants.ROOT + "." + constants.LOG_ROTATE_CONFIG_MAXAGE:
 					s.cfg.RotateConfig.MaxAge = value
 				default:
 					continue

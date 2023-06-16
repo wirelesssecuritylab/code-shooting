@@ -13,7 +13,6 @@ import (
 
 	"code-shooting/infra/config/internal/log"
 	"code-shooting/infra/config/internal/utils"
-
 	"go.uber.org/config"
 )
 
